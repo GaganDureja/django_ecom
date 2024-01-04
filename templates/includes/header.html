@@ -207,7 +207,7 @@
 									<div class="dropdown-menu">
 										{% if not user.is_authenticated %}
 										<a href="{% url 'users:Signup'%}" class="btn_1">Sign In or Sign Up</a>
-										{% endif %}
+										{% else %}
 										<ul>
 											<li>
 												<a href="track-order.html"><i class="ti-truck"></i>Track your Order</a>
@@ -219,14 +219,13 @@
 												<a href="#"><i class="ti-user"></i>My Profile</a>
 											</li>
 											<li>
-												<a href="help.html"><i class="ti-help-alt"></i>Help and Faq</a>
+												<a href="#"><i class="ti-help-alt"></i>Help and Faq</a>
 											</li>
-											{% if user.is_authenticated %}
 											<li>
 												<a href="{% url 'users:logout'%}"><i class="ti-user"></i>Logout</a>
 											</li>
-											{% endif %}
 										</ul>
+										{% endif %}
 									</div>
 								</div>
 								<!-- /dropdown-access-->
