@@ -37,11 +37,15 @@ class sub_category(models.Model):
 
 class brand(models.Model):
     name = models.CharField(max_length=100)
+    imgg = models.FileField(upload_to='brand', null=True, blank=True)
     created_on=models.DateTimeField(auto_now_add=True)
     updated_on=models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.name
 
+class P_Images(models.Model):
+    img=models.FileField(upload_to='product_images',null=True,blank=True)    
+    
 class product(models.Model):
     category = models.ForeignKey(category,on_delete=models.CASCADE)
     sub_category = models.ForeignKey(sub_category,on_delete=models.CASCADE)
@@ -49,12 +53,13 @@ class product(models.Model):
     brand = models.ForeignKey(brand,on_delete=models.CASCADE)
     mrp = models.IntegerField()
     price = models.IntegerField()
-    imgg = models.FileField(upload_to='product',null=True,blank=True)
+    # imgg = models.FileField(upload_to='product',null=True,blank=True)
     description = models.TextField()
     stock = models.IntegerField()    
     sort_no = models.IntegerField() 
     created_on=models.DateTimeField(auto_now_add=True)
     updated_on=models.DateTimeField(auto_now=True)
+    product_images=models.ManyToManyField(P_Images)
 
 
     slug = models.SlugField(unique=True, blank=True)
@@ -79,6 +84,9 @@ class Banner(models.Model):
     def __str__(self):
         return self.heading
     
+
+
+
 
 class Rating(models.Model):
     pass

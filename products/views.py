@@ -19,10 +19,17 @@ def cat_links(request):
 
 
 def top_products(request):
-    all_products = product.objects.all()[:8]
+    all_products = product.objects.all().order_by('-id')[:8]
     return all_products
     # return render(request,'products/products.html',{'all_products':all_products})
 
+def feature_products(request):
+    old_products = product.objects.all()[:8]
+    return old_products
+
+def top_brands(request):
+    top_brand = brand.objects.all()
+    return top_brand
 
 def products(request, category_slug=None, sub_category_slug=None):
     all_products = product.objects.all()
