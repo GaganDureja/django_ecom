@@ -86,13 +86,13 @@
                 <div class="grid_item">
                     <figure>
                         <span class="ribbon off">  {% percent_discount product.price product.mrp %}   </span>                        
-                        <a href="#">
+                        <a href="{% url 'products:product_detail' product.slug %}">
                             <img class="img-fluid lazy" src="{{product.imgg.url}}" data-src="{{product.imgg.url}}" alt="">
                             <img class="img-fluid lazy" src="{{product.imgg.url}}" data-src="{{product.imgg.url}}" alt="">
                         </a>
                     </figure>
                     <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i></div>
-                    <a href="#">
+                    <a href="{% url 'products:product_detail' product.slug %}">
                         <h3>{{ product.name }}</h3>
                     </a>
                     <div class="price_box">

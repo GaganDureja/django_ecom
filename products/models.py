@@ -56,6 +56,12 @@ class product(models.Model):
     created_on=models.DateTimeField(auto_now_add=True)
     updated_on=models.DateTimeField(auto_now=True)
 
+
+    slug = models.SlugField(unique=True, blank=True)
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(product, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.name
 

@@ -26,11 +26,7 @@ def top_products(request):
 
 def products(request, category_slug=None, sub_category_slug=None):
     all_products = product.objects.all()
-    # if category:
-    #     all_products = all_products.filter(category=category)
-    # if sub_category:
-    #     all_products = all_products.filter(sub_category=sub_category)
-
+    
     cat = None
     subcat = None
     
@@ -53,3 +49,10 @@ def products(request, category_slug=None, sub_category_slug=None):
         products = paginator.page(paginator.num_pages)
 
     return render(request, 'products/products.html', {'all_products': products})
+
+
+
+def product_detail(request, product_slug):
+    product_det = get_object_or_404(product, slug=product_slug)
+    related_pro = product.objects.filter(category=product_det.category)[:12]
+    return render(request, 'products/product-detail.html',{'pro_det':product_det,'related_pro':related_pro})
