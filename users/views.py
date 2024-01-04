@@ -36,31 +36,22 @@ def Home(request):
         })
 
 
+def about(request):
+    return render(request,'home/about.html')
 
+def faq(request):
+    return render(request,'home/faq.html')
 
+def contact(request):
+    return render(request,'home/contact.html')
 
     
 # Create your views here.
 def users(request):
-    x = "Time now (UTC): ", timezone.now()
-    y = "Localtime (Timezone time):" , timezone.localtime()
-    z = "Localmachine (default local) :" , datetime.datetime.now()
-    my_dict = {'x':{'a':1,'b':50},'y':1,'z':1}
-    # return HttpReponse(my_list)
-    # return redirect('home')
-
-    # print(my_dict,'cccccccc')
-    
-    # return render(request,'users/index.html',my_dict)
-
-    # return HttpResponse("Hello this is users index!")
-
-
-    all_users = User.objects.all()
-
-    # print(all_users)
-
-    return render(request,'users/index.html',{'all_users':all_users})
+    if request.user.is_authenticated:
+        return redirect('users:Signin')
+    else:
+        return redirect('users:Signin')
 
 
 def Signup(request): 
@@ -104,16 +95,7 @@ def Signin(request):
                     return redirect('home')
                 else:
                     messages.error(request, "Incorrect password!!!")
-                # if User.objects.filter(email=request.POST.get('email'),password=make_password(request.POST.get('password_in'))):
-                #     if User.objects.filter(email=request.POST.get('email'),password=make_password(request.POST.get('password_in')),is_active=1):
-                #         messages.success(request, "Login success")
-                #         return render(request,'home/account.html')
-                #     else:
-                #         messages.warning(request, "Account Deactivated!!!")
-                # else:
-                #     messages.error(request, "Incorrect password!!!")     
                 return redirect('users:Signin')       
-                return render(request,'home/account.html')
             else:
                 messages.warning(request, "Email not registered")      
                 return render(request,'home/account.html')

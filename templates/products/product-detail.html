@@ -8,24 +8,18 @@
 	                <div class="all">
 	                    <div class="slider">
 	                        <div class="owl-carousel owl-theme main">
-	                            <div style="background-image: url({{pro_det.imgg.url}});" class="item-box"></div>
-	                            <div style="background-image: url({{pro_det.imgg.url}});" class="item-box"></div>
-	                            <div style="background-image: url({{pro_det.imgg.url}});" class="item-box"></div>
-	                            <div style="background-image: url({{pro_det.imgg.url}});" class="item-box"></div>
-	                            <div style="background-image: url({{pro_det.imgg.url}});" class="item-box"></div>
-	                            <div style="background-image: url({{pro_det.imgg.url}});" class="item-box"></div>
+								{% for image in pro_det.product_images.all %}
+									<div style="background-image: url({{image.img.url}});" class="item-box"></div>
+								{% endfor %}
 	                        </div>
 	                        <div class="left nonl"><i class="ti-angle-left"></i></div>
 	                        <div class="right"><i class="ti-angle-right"></i></div>
 	                    </div>
 	                    <div class="slider-two">
 	                        <div class="owl-carousel owl-theme thumbs">
-	                            <div style="background-image: url({{pro_det.imgg.url}});" class="item active"></div>
-	                            <div style="background-image: url({{pro_det.imgg.url}});" class="item"></div>
-	                            <div style="background-image: url({{pro_det.imgg.url}});" class="item"></div>
-	                            <div style="background-image: url({{pro_det.imgg.url}});" class="item"></div>
-	                            <div style="background-image: url({{pro_det.imgg.url}});" class="item"></div>
-	                            <div style="background-image: url({{pro_det.imgg.url}});" class="item"></div>
+								{% for image in pro_det.product_images.all %}
+									<div style="background-image: url({{image.img.url}});" class="item {% if forloop.first %}active{% endif %}"></div>
+								{% endfor %}
 	                        </div>
 	                        <div class="left-t nonl-t"></div>
 	                        <div class="right-t"></div>
@@ -180,7 +174,7 @@
 	        <div class="main_title">
 	            <h2>Related</h2>
 	            <span>Products</span>
-	            <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+	            <p>Similar products you might be interested.</p>
 	        </div>
 	        <div class="owl-carousel owl-theme products_carousel">
 				{% for product in related_pro %}
@@ -189,7 +183,9 @@
 	                    <!-- <span class="ribbon new">New</span> -->
 	                    <figure>
 	                        <a href="{% url 'products:product_detail' product.slug %}">
-	                            <img class="owl-lazy" src="{{product.imgg.url}}" data-src="{{product.imgg.url}}" alt="">
+								{% for image in product.product_images.all|slice:":1" %}
+	                            <img class="owl-lazy" src="{{image.img.url}}" data-src="{{image.img.url}}" alt="">
+								{% endfor %}
 	                        </a>
 	                    </figure>
 	                    <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i></div>

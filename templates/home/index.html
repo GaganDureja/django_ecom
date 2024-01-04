@@ -99,6 +99,7 @@
             <div class="item">
                 <div class="grid_item">
                     <figure>
+                        <span class="ribbon off">  {% percent_discount product.price product.mrp %}   </span>
                         <a href="{% url 'products:product_detail' product.slug %}">
                             {% for image in product.product_images.all|slice:":1" %}
                                 <img class="owl-lazy" src="{{image.img.url}}" data-src="{{image.img.url}}" alt="">
