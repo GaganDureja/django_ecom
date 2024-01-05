@@ -28,9 +28,16 @@ urlpatterns = [
     path('about/', about, name="about"),
     path('faq/', faq, name="faq"),
     path('contact/', contact, name="contact"),
+
+    path('add_to_cart/<int:product_id>/', add_to_cart, name='add_to_cart'),
+    path('cart/', view_cart, name='view_cart'),
+
+    
     path('account/', Signup),
-    path('logout/', user_logout),    
+    path('logout/', user_logout),
     path('users/', include('users.urls')),
+
+
     path('blogs/', include('blogs.urls')),
     path('products/', include('products.urls')),
     path('admin/', admin.site.urls),
