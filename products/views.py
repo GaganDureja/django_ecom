@@ -55,7 +55,7 @@ def products(request, category_slug=None, sub_category_slug=None):
     except EmptyPage:
         products = paginator.page(paginator.num_pages)
 
-    return render(request, 'products/products.html', {'all_products': products})
+    return render(request, 'products/products.html', {'all_products': products,'category':cat, 'subcategory':subcat})
 
 
 

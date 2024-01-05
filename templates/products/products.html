@@ -8,12 +8,12 @@
                 <div class="breadcrumbs">
                     <ul>
                         <li><a href="{% url 'home'%}">Home</a></li>
-                        {% if category_slug %}
-                            <li><a href="?category={{ category }}">{{ category }}</a></li>
+                        {% if category %}
+                            <li><a href="{% url 'products:product_list_category' category.slug%}">{{ category }}</a></li>
                         {% endif %}
 
                         {% if subcategory %}
-                            <li>{{ sub_category }}</li>
+                            <li>{{ subcategory }}</li>
                         {% endif %}
                         
                     </ul>
@@ -22,11 +22,11 @@
 
                 <h1>
                     {% if category %} {{ category }} {% endif %} 
-                    {% if subcategory %} - {{ sub_category }} {% endif %}
+                    {% if subcategory %} - {{ subcategory }} {% endif %}
                 </h1>
             </div>
         </div>
-        <img src="{% static 'img/bg_cat_shoes.jpg' %}" class="img-fluid" alt="">
+        <img src="{{category.imgg.url}}" class="img-fluid" alt="">
     </div>
     <!-- /top_banner -->
         <div id="stick_here"></div>		
@@ -209,7 +209,9 @@
                             <span class="ribbon off">{% percent_discount product.price product.mrp %}</span>
                             <figure>
                                 <a href="{% url 'products:product_detail' product.slug %}">
-                                    <img class="img-fluid lazy" src="{{product.imgg.url}}" data-src="{{product.imgg.url}}" alt="">
+                                    {% for image in product.product_images.all|slice:":1" %}
+                                    <img class="img-fluid lazy" src="{{image.img.url}}" data-src="{{image.img.url}}" alt="">
+                                    {% endfor %}
                                 </a>
                             </figure>
                             <a href="{% url 'products:product_detail' product.slug %}">

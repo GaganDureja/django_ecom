@@ -20,9 +20,18 @@
                                     <p class="owl-slide-animated owl-slide-subtitle">
                                         {{ banner.description }}
                                     </p>
-
-                                    {% if banner.category %}
-                                    <div class="owl-slide-animated owl-slide-cta"><a class="btn_1" href="listing-grid-1-full.html" role="button">Shop Now</a></div>
+                                    {% if banner.product %}
+                                        <div class="owl-slide-animated owl-slide-cta">
+                                            <a class="btn_1" href="{% url 'products:product_detail' banner.product.slug  %}" role="button">Shop Now</a>
+                                        </div>
+                                    {% elif banner.sub_category %}
+                                        <div class="owl-slide-animated owl-slide-cta">
+                                            <a class="btn_1" href="{% url 'products:product_list_subcategory' banner.category.slug banner.sub_category.slug %}" role="button">Shop Now</a>
+                                        </div>
+                                    {% elif banner.category %}
+                                        <div class="owl-slide-animated owl-slide-cta">
+                                            <a class="btn_1" href="{% url 'products:product_list_category' banner.category.slug %}" role="button">Shop Now</a>
+                                        </div>
                                     {% endif %}
                                 </div>
                             </div>

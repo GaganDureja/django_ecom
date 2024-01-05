@@ -7,7 +7,7 @@ class category(models.Model):
     name = models.CharField(max_length=200)
     created_on=models.DateTimeField(auto_now_add=True)
     updated_on=models.DateTimeField(auto_now=True)
-
+    imgg = models.FileField(upload_to='category')
     slug = models.SlugField(unique=True, blank=True)
 
     def save(self, *args, **kwargs):
@@ -37,14 +37,14 @@ class sub_category(models.Model):
 
 class brand(models.Model):
     name = models.CharField(max_length=100)
-    imgg = models.FileField(upload_to='brand', null=True, blank=True)
+    imgg = models.FileField(upload_to='brand')
     created_on=models.DateTimeField(auto_now_add=True)
     updated_on=models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.name
 
 class P_Images(models.Model):
-    img=models.FileField(upload_to='product_images',null=True,blank=True)    
+    img=models.FileField(upload_to='product_images')    
     
 class product(models.Model):
     category = models.ForeignKey(category,on_delete=models.CASCADE)
