@@ -15,6 +15,9 @@ from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 from products.views import *
 
+from blogs.views import *
+
+
 def all_banner(request):
     all_ban = Banner.objects.all()
     return all_ban
@@ -24,6 +27,7 @@ def Home(request):
     product_list = top_products(request)
     old_products  = feature_products(request)
     t_brands = top_brands(request)
+    t_blogs = top_blogs(request)
     # print(product_list) 
     return render(
         request,
@@ -32,7 +36,8 @@ def Home(request):
             'product_list':product_list,
             'banner_data':banner_data,
             'old_products':old_products,
-            't_brands':t_brands
+            't_brands':t_brands,
+            't_blogs':t_blogs
         })
 
 
