@@ -1,0 +1,127 @@
+{% include "includes/header.html" %}
+{% load static %}
+{% block specific_css %}
+	<link href="{% static 'css/blog.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+	<main class="bg_gray">
+		<div class="container margin_30">
+			<div class="page_header">
+				<div class="breadcrumbs">
+					<ul>
+						<li><a href="{% url 'home' %}">Home</a></li>
+						<li>Blogs </li>
+					</ul>
+				</div>
+				<h1>Ecom Blog &amp; News</h1>
+			</div>
+			<!-- /page_header -->
+			<div class="row">
+				<div class="col-lg-9">
+					<div class="widget search_blog d-block d-sm-block d-md-block d-lg-none">
+						<div class="form-group">
+							<input type="text" name="search" id="search" class="form-control" placeholder="Search..">
+							<button type="submit"><i class="ti-search"></i></button>
+						</div>
+					</div>
+					<!-- /widget -->
+					<div class="row">
+
+						{% for blog in all_blogs %}
+
+						<div class="col-md-6">
+							<article class="blog">
+								<figure>
+									<a href="{% url 'blogs:blog_detail' blog.slug%}"><img src="{{blog.imgg.url}}" alt="">
+										<div class="preview"><span>Read more</span></div>
+									</a>
+								</figure>
+								<div class="post_info">
+									<small>{{blog.category}} - {{blog.created_on|date:"M j Y"}}</small>
+									<h2><a href="{% url 'blogs:blog_detail' blog.slug%}">{{blog.heading}}</a></h2>
+									<p>{{blog.preview}}</p>
+									<ul>
+										<li>
+											<div class="thumb"><img src="{% static 'img/avatar.jpg' %}" alt=""></div> Admin
+										</li>
+										<li><i class="ti-comment"></i>20</li>
+									</ul>
+								</div>
+							</article>
+							<!-- /article -->
+						</div>
+						<!-- /col -->
+
+						{% endfor %}
+
+
+						
+					</div>
+					<!-- /row -->
+
+					<div class="pagination__wrapper no_border add_bottom_30">
+						<ul class="pagination">
+							{% if all_blogs.paginator.num_pages > 1 %}
+								{% if all_blogs.has_previous %}
+								<li><a href="?page={{ all_blogs.previous_page_number }}" class="prev" title="previous page">&#10094;</a></li>
+								{% endif %}
+								<li>
+									<a href="#" class="active">{{ all_blogs.number }}</a>
+								</li>
+								{% if all_blogs.has_next %}
+								<li><a href="?page={{ all_blogs.next_page_number }}" class="next" title="next page">&#10095;</a></li>
+								{% endif %}
+							{% endif %}
+						</ul>
+					</div>
+					<!-- /pagination -->
+
+				</div>
+				<!-- /col -->
+
+				<aside class="col-lg-3">
+					<div class="widget search_blog d-none d-sm-none d-md-none d-lg-block">
+						<div class="form-group">
+							<input type="text" name="search" id="search_blog" class="form-control" placeholder="Search..">
+							<button type="submit"><i class="ti-search"></i></button>
+						</div>
+					</div>
+					<!-- /widget -->
+					<div class="widget">
+						<div class="widget-title">
+							<h4>Categories</h4>
+						</div>
+						<ul class="cats">
+							<li><a href="#">Food <span>(12)</span></a></li>
+							<li><a href="#">Places to visit <span>(21)</span></a></li>
+							<li><a href="#">New Places <span>(44)</span></a></li>
+							<li><a href="#">Suggestions and guides <span>(31)</span></a></li>
+						</ul>
+					</div>
+					<!-- /widget -->
+					<div class="widget">
+						<div class="widget-title">
+							<h4>Popular Tags</h4>
+						</div>
+						<div class="tags">
+							<a href="#">Food</a>
+							<a href="#">Bars</a>
+							<a href="#">Cooktails</a>
+							<a href="#">Shops</a>
+							<a href="#">Best Offers</a>
+							<a href="#">Transports</a>
+							<a href="#">Restaurants</a>
+						</div>
+					</div>
+					<!-- /widget -->
+				</aside>
+				<!-- /aside -->
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</main>
+	<!--/main-->
+	
+{% include "includes/footer.html" %}

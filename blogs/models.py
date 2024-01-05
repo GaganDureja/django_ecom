@@ -36,6 +36,7 @@ class Blog(models.Model):
     tags = models.ManyToManyField(Tag)
     heading = models.CharField(max_length=200)
     preview = models.CharField(max_length=555)
+    detail = models.TextField()
     imgg = models.FileField(upload_to='blog')
     created_on=models.DateTimeField(auto_now_add=True)
     updated_on=models.DateTimeField(auto_now=True)

@@ -31,6 +31,7 @@ urlpatterns = [
     path('account/', Signup),
     path('logout/', user_logout),    
     path('users/', include('users.urls')),
+    path('blogs/', include('blogs.urls')),
     path('products/', include('products.urls')),
     path('admin/', admin.site.urls),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -29,6 +29,7 @@ def Home(request):
     t_brands = top_brands(request)
     t_blogs = top_blogs(request)
     # print(product_list) 
+    
     return render(
         request,
         'home/index.html',
@@ -38,7 +39,7 @@ def Home(request):
             'old_products':old_products,
             't_brands':t_brands,
             't_blogs':t_blogs
-        })
+    })
 
 
 def about(request):

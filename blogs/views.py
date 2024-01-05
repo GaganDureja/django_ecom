@@ -27,7 +27,7 @@ def blogs(request, category_slug=None, tag_slug=None):
 
     
     page = request.GET.get('page', 1)
-    paginator = Paginator(all_blogs, 6)
+    paginator = Paginator(all_blogs, 4)
     
     try:
         blogs = paginator.page(page)

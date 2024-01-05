@@ -1,8 +1,13 @@
 {% include "includes/header.html" %} 
 {% load static %}
-
-
 {% load custom_filters %}
+
+
+{% block specific_css %}
+<link href="{% static 'css/home_1.css' %}" rel="stylesheet">
+{% endblock %}
+
+
 <main>
     <div id="carousel-home">
         <div class="owl-carousel owl-theme">
@@ -168,7 +173,7 @@
                     </figure>
                     <ul>
                         <li>by Admin</li>
-                        <li>{{blog.created_on|date:"M j, Y"}}</li>
+                        <li>{{blog.created_on|date:"M j Y"}}</li>
                     </ul>
                     <h4>{{blog.heading}}</h4>
                     <p>{{blog.preview}}</p>
