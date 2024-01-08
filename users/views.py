@@ -15,7 +15,7 @@ from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 from products.views import *
 from blogs.views import *
-
+from django.contrib.auth.models import AnonymousUser
 
 def all_banner(request):
     all_ban = Banner.objects.all()
@@ -28,7 +28,9 @@ def Home(request):
     t_brands = top_brands(request)
     t_blogs = top_blogs(request)
     # print(product_list) 
-    
+    # session_id = request.session._get_or_create_session_key()
+
+    # print(session_id)
     return render(
         request,
         'home/index.html',
@@ -73,8 +75,15 @@ def view_cart(request):
 
 def add_to_cart(request, product_id):
     c_product = get_object_or_404(product, pk=product_id)
+    
+    if request.user.is_authenticated:
+        user_cart, created = Cart.objects.get_or_create(user=request.user)
+    else:        
+        user_cart, created = Cart.objects.get_or_create(session_key=request.session.session_key)
+        if not user_cart.session_key:
+            user_cart.session_key = request.session.session_key
+            user_cart.save()
 
-    user_cart, created = Cart.objects.get_or_create(user=request.user)
     cart_item, created = CartItem.objects.get_or_create(cart=user_cart, product=c_product)
 
     if not created:        
