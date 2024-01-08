@@ -1,4 +1,4 @@
-{% include "includes/header.html" %} 
+{% extends "includes/base.html" %} 
 {% load static %}
 {% load custom_filters %}
 
@@ -7,7 +7,7 @@
 <link href="{% static 'css/home_1.css' %}" rel="stylesheet">
 {% endblock %}
 
-
+{% block main_content %}
 <main>
     <div id="carousel-home">
         <div class="owl-carousel owl-theme">
@@ -82,8 +82,8 @@
                         
                     </a>
                     <div class="price_box">
-                        <span class="new_price">{{ product.price }}</span>
-                        <span class="old_price">{{ product.mrp }}</span>
+                        <span class="new_price">₹ {{ product.price }}</span>
+                        <span class="old_price">₹ {{ product.mrp }}</span>
                     </div>
                     <ul>
                         <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
@@ -126,7 +126,7 @@
                         <h3>{{product.name}}</h3>
                     </a>
                     <div class="price_box">
-                        <span class="new_price">{{product.price}}</span>
+                        <span class="new_price">₹ {{product.price}}</span>
                     </div>
                     <ul>
                         <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
@@ -187,5 +187,5 @@
     <!-- /container -->
 </main>
 <!-- /main -->
+{% endblock %}
 
-{% include "includes/footer.html" %} 

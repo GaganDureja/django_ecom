@@ -73,6 +73,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'my_restart.context_processors.global_categories',  # cat and subcat
+                'my_restart.context_processors.cart_items',  # top cart items
             ],
         },
     },

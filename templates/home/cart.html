@@ -1,10 +1,12 @@
-{% include "includes/header.html" %}
+{% extends "includes/base.html" %}
 {% load static %}
 {% block specific_css %}
 
 <link href="{% static 'css/cart.css' %}" rel="stylesheet">
 
 {% endblock %}
+
+{% block main_content %}
 	<main class="bg_gray">
 		<div class="container margin_30">
 		<div class="page_header">
@@ -49,7 +51,7 @@
 										<span class="item_cart">{{item.product}}</span>
 									</td>
 									<td>
-										<strong>{{item.product.price}}</strong>
+										<strong>₹ {{item.product.price}}</strong>
 									</td>
 									<td>
 										<div class="numbers-row">
@@ -57,7 +59,7 @@
 										<div class="inc button_inc">+</div><div class="dec button_inc">-</div></div>
 									</td>
 									<td>
-										<strong> {% widthratio item.product.price 1 item.quantity  %}</strong>
+										<strong>₹  {% widthratio item.product.price 1 item.quantity  %}</strong>
 									</td>
 									<td class="options">
 										<a href="{% url 'remove_from_cart' item.id %}"><i class="ti-trash"></i></a>
@@ -111,5 +113,4 @@
 		
 	</main>
 	<!--/main-->
-	
-{% include "includes/footer.html" %}
+{% endblock %}	

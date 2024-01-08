@@ -2,6 +2,8 @@
 
 from products.models import category, sub_category  # Adjust this import based on your app's structure
 
+from users.models import Cart, CartItem
+
 def global_categories(request):
     all_categories = category.objects.all()
     
@@ -12,4 +14,15 @@ def global_categories(request):
 
     return {
         'categories_with_subcategories': categories_with_subcategories,
+    }
+
+
+def cart_items(request):
+    if not request.user.is_authenticated:
+        cart_items_top = ""
+    else:
+        user_cart, created = Cart.objects.get_or_create(user=request.user)
+        cart_items_top = CartItem.objects.filter(cart=user_cart)
+    return {
+        'cart_items_top': cart_items_top,
     }

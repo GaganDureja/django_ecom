@@ -1,5 +1,5 @@
-{% include "includes/header.html" %}
-	
+{% extends "includes/base.html" %}
+{% block main_content %}	
 	<main class="bg_gray">
 		
 	<div class="container margin_30">
@@ -127,8 +127,8 @@
 		<!-- /container -->
 	</main>
 	<!--/main-->
-	
-{% include "includes/footer.html" %}
+{% endblock %}	
+
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
  <!-- <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script> -->
 <script type="text/javascript">

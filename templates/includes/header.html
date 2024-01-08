@@ -181,20 +181,18 @@
 									<a href="{% url 'view_cart' %}" class="cart_bt"><strong>2</strong></a>
 									<div class="dropdown-menu">
 										<ul>
+											{% for cart_item in cart_items_top %}
 											<li>
 												<a href="product-detail-1.html">
-													<figure><img src="{% static 'img/products/product_placeholder_square_small.jpg' %}" data-src="{% static 'img/products/shoes/thumb/1.jpg' %}" alt="" width="50" height="50" class="lazy"></figure>
-													<strong><span>1x Armor Air x Fear</span>$90.00</strong>
+													{% for image in cart_item.product.product_images.all|slice:":1" %}
+													<figure><img src="{{image.img.url}}" data-src="{{image.img.url}}" alt="" width="50" height="50" class="lazy"></figure>
+													{% endfor %}
+													<strong><span>{{cart_item.quantity}} x {{cart_item.product}}</span>{% widthratio cart_item.product.price 1 cart_item.quantity  %}</strong>
 												</a>
 												<a href="#0" class="action"><i class="ti-trash"></i></a>
 											</li>
-											<li>
-												<a href="product-detail-1.html">
-													<figure><img src="{% static 'img/products/product_placeholder_square_small.jpg' %}" data-src="{% static 'img/products/shoes/thumb/2.jpg' %}" alt="" width="50" height="50" class="lazy"></figure>
-													<strong><span>1x Armor Okwahn II</span>$110.00</strong>
-												</a>
-												<a href="0" class="action"><i class="ti-trash"></i></a>
-											</li>
+											{% endfor %}
+											 
 										</ul>
 										<div class="total_drop">
 											<div class="clearfix"><strong>Total</strong><span>$200.00</span></div>
