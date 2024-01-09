@@ -81,6 +81,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'my_restart.wsgi.application'
 
+LOGIN_URL = '/users/signin'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
