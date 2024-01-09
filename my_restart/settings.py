@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'users',
     'products',
     'blogs',
+    'django_crontab',
    
 
 ]
@@ -82,6 +83,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'my_restart.wsgi.application'
 
 LOGIN_URL = '/users/signin'
+
+CRONJOBS = [
+    ('* * * * *', 'blogs.cron.add_cat')
+]
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
