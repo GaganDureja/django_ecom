@@ -183,7 +183,7 @@
 											<ul>
 												{% for cart_item in cart_items_top %}
 												<li>
-													<a href="product-detail-1.html">
+													<a href="{% url 'products:product_detail' cart_item.product.slug %}">
 														{% for image in cart_item.product.product_images.all|slice:":1" %}
 														<figure><img src="{{image.img.url}}" data-src="{{image.img.url}}" alt="" width="50" height="50" class="lazy"></figure>
 														{% endfor %}
@@ -216,7 +216,7 @@
 											<a href="#" class="btn_1">{{ user.first_name }}</a>
 											<ul>
 												<li>
-													<a href="track-order.html"><i class="ti-truck"></i>Track your Order</a>
+													<a href="#"><i class="ti-truck"></i>Track your Order</a>
 												</li>
 												<li>
 													<a href="#"><i class="ti-package"></i>My Orders</a>

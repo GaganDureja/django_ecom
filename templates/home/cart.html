@@ -9,84 +9,84 @@
 {% block main_content %}
 	<main class="bg_gray">
 		<div class="container margin_30">
-		<div class="page_header">
-			<div class="breadcrumbs">
-				<ul>
-					<li><a href="{% url 'home' %}">Home</a></li>
-					<li>Cart</li>
-				</ul>
+			<div class="page_header">
+				<div class="breadcrumbs">
+					<ul>
+						<li><a href="{% url 'home' %}">Home</a></li>
+						<li>Cart</li>
+					</ul>
+				</div>
+				<h1>Cart page</h1>
 			</div>
-			<h1>Cart page</h1>
-		</div>
-		<!-- /page_header -->
-		<table class="table table-striped cart-list">
-							<thead>
-								<tr>
-									<th>
-										Product
-									</th>
-									<th>
-										Price
-									</th>
-									<th>
-										Quantity
-									</th>
-									<th>
-										Subtotal
-									</th>
-									<th>
-										
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								{% for item in cart_items %}
-								<tr>
-									<td>
-										<div class="thumb_cart">
-											{% for image in item.product.product_images.all|slice:":1" %}
-											<img src="{{image.img.url}}" data-src="{{image.img.url}}"  class="lazy" alt="Image">
-											{% endfor %}
-										</div>
-										<span class="item_cart">{{item.product}}</span>
-									</td>
-									<td>
-										<strong>₹ {{item.product.price}}</strong>
-									</td>
-									<td>
-										<div class="numbers-row">
-											<input type="text" value="{{item.quantity}}" onclick="update_cart_item('{{item.id}}',this.value)" id="quantity_{{item.id}}" class="qty2" name="quantity_1" readonly>
-											<div class="inc button_inc">+</div>
-											<div class="dec button_inc">-</div>
-										</div>
-									</td>
-									<td>
-										<strong id="item_subtotal_{{item.id}}">₹  {% widthratio item.product.price 1 item.quantity  %}</strong>
-									</td>
-									<td class="options">
-										<a href="{% url 'remove_from_cart' item.id %}"><i class="ti-trash"></i></a>
-									</td>
-								</tr>
+			<!-- /page_header -->
+			<table class="table table-striped cart-list">
+				<thead>
+					<tr>
+						<th>
+							Product
+						</th>
+						<th>
+							Price
+						</th>
+						<th>
+							Quantity
+						</th>
+						<th>
+							Subtotal
+						</th>
+						<th>
+							
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for item in cart_items %}
+					<tr>
+						<td>
+							<div class="thumb_cart">
+								{% for image in item.product.product_images.all|slice:":1" %}
+								<img src="{{image.img.url}}" data-src="{{image.img.url}}"  class="lazy" alt="Image">
 								{% endfor %}
-							</tbody>
-						</table>
+							</div>
+							<span class="item_cart">{{item.product}}</span>
+						</td>
+						<td>
+							<strong>₹ {{item.product.price}}</strong>
+						</td>
+						<td>
+							<div class="numbers-row">
+								<input type="text" value="{{item.quantity}}" onclick="update_cart_item('{{item.id}}',this.value)" id="quantity_{{item.id}}" class="qty2" name="quantity_1" readonly>
+								<div class="inc button_inc">+</div>
+								<div class="dec button_inc">-</div>
+							</div>
+						</td>
+						<td>
+							<strong id="item_subtotal_{{item.id}}">₹  {% widthratio item.product.price 1 item.quantity  %}</strong>
+						</td>
+						<td class="options">
+							<a href="{% url 'remove_from_cart' item.id %}"><i class="ti-trash"></i></a>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
 
-						<div class="row add_top_30 flex-sm-row-reverse cart_actions">
-						<div class="col-sm-4 text-end">
-							<button type="button" class="btn_1 gray">Update Cart</button>
-						</div>
-							<div class="col-sm-8">
-							<div class="apply-coupon">
-								<div class="form-group">
-									<div class="row g-2">
-										<div class="col-md-6"><input type="text" name="coupon-code" value="" placeholder="Promo code" class="form-control"></div>
-										<div class="col-md-4"><button type="button" class="btn_1 outline">Apply Coupon</button></div>
-									</div>
-								</div>
+			<div class="row add_top_30 flex-sm-row-reverse cart_actions">
+				<div class="col-sm-4 text-end">
+					<button type="button" class="btn_1 gray">Update Cart</button>
+				</div>
+					<div class="col-sm-8">
+					<div class="apply-coupon">
+						<div class="form-group">
+							<div class="row g-2">
+								<div class="col-md-6"><input type="text" name="coupon-code" value="" placeholder="Promo code" class="form-control"></div>
+								<div class="col-md-4"><button type="button" class="btn_1 outline">Apply Coupon</button></div>
 							</div>
 						</div>
 					</div>
-					<!-- /cart_actions -->
+				</div>
+			</div>
+			<!-- /cart_actions -->
 	
 		</div>
 		<!-- /container -->
