@@ -1,6 +1,10 @@
-{% include "includes/header.html" %}
+{% extends "includes/base.html" %}
 {% load static %}
 
+
+{% block specific_css %}
+<link href="{% static 'css/about.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block main_content %}
 	<main class="bg_gray">
@@ -157,4 +161,5 @@
 	</main>
 	<!--/main-->
 {% endblock %}    	
-{% include "includes/footer.html" %}
+
+

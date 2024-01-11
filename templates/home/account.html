@@ -1,4 +1,11 @@
 {% extends "includes/base.html" %}
+
+
+
+{% block specific_css %}
+<link href="{% static 'css/account.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block main_content %}	
 	<main class="bg_gray">
 		
@@ -128,9 +135,9 @@
 	</main>
 	<!--/main-->
 {% endblock %}	
+{% block specific_js %}
 
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
- <!-- <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script> -->
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#signup_form").validate({
@@ -147,3 +154,5 @@
 		});
 	});
 </script>
+
+{% endblock %}

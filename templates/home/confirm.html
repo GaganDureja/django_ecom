@@ -1,4 +1,12 @@
-{% include "includes/header.html" %}
+{% extends "includes/base.html" %}
+{% load static %}
+
+{% block specific_css %}
+<link href="{% static 'css/checkout.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block main_content %}
 	
 	<main class="bg_gray">
 		<div class="container">
@@ -24,5 +32,6 @@
 		
 	</main>
 	<!--/main-->
-	
-{% include "includes/footer.html" %}
+
+{% endblock %}
+

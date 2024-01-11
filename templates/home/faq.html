@@ -1,5 +1,14 @@
-{% include "includes/header.html" %}
+{% extends "includes/base.html" %}
 {% load static %}	
+
+
+{% block specific_css %}
+<link href="{% static 'css/faq.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+
+{% block main_content %}
 	<main class="bg_gray">
 	
 		
@@ -89,5 +98,5 @@
 		<!-- /bg_white -->
 	</main>
 	<!--/main-->
-	
-	{% include "includes/footer.html" %}
+{% endblock %}
+

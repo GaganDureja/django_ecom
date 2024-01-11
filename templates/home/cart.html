@@ -55,8 +55,10 @@
 									</td>
 									<td>
 										<div class="numbers-row">
-											<input type="text" value="1" id="quantity_1" class="qty2" name="quantity_1">
-										<div class="inc button_inc">+</div><div class="dec button_inc">-</div></div>
+											<input type="text" value="{{item.quantity}}" onclick="console.log('{{item.id}}',this.value)" id="quantity_{{item.id}}" class="qty2" name="quantity_1" readonly>
+											<div class="inc button_inc">+</div>
+											<div class="dec button_inc">-</div>
+										</div>
 									</td>
 									<td>
 										<strong>₹  {% widthratio item.product.price 1 item.quantity  %}</strong>
@@ -91,20 +93,17 @@
 		
 		<div class="box_cart">
 			<div class="container">
-			<div class="row justify-content-end">
-				<div class="col-xl-4 col-lg-4 col-md-6">
-			<ul>
-				<li>
-					<span>Subtotal</span> $240.00
-				</li>
-				<li>
-					<span>Shipping</span> $7.00
-				</li>
-				<li>
-					<span>Total</span> $247.00
-				</li>
-			</ul>
-			<a href="cart-2.html" class="btn_1 full-width cart">Proceed to Checkout</a>
+				<div class="row justify-content-end">
+					<div class="col-xl-4 col-lg-4 col-md-6">
+						<ul>
+							<li>
+								<span>Subtotal</span>₹ {{total_price}}
+							</li>
+							<li>
+								<span>Total</span> ₹ {{total_price}}
+							</li>
+						</ul>
+						<a href="#" class="btn_1 full-width cart">Proceed to Checkout</a>
 					</div>
 				</div>
 			</div>
@@ -114,3 +113,11 @@
 	</main>
 	<!--/main-->
 {% endblock %}	
+
+
+
+<script>
+	function update_cart_item(cart_id,new_val){
+		console.log(cart_id,new_val);
+	}
+</script>

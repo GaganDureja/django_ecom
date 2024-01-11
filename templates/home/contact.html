@@ -1,5 +1,13 @@
-{% include "includes/header.html" %}
+{% extends "includes/base.html" %}
 {% load static %}
+
+{% block specific_css %}
+<link href="{% static 'css/contact.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block main_content %}
+
 	<main class="bg_gray">
 	
 			<div class="container margin_60">
@@ -65,5 +73,5 @@
 		<!-- /bg_white -->
 	</main>
 	<!--/main-->
+{% endblock %}
 	
-{% include "includes/footer.html" %}

@@ -58,9 +58,9 @@ def users(request):
         return redirect('users:Signin')
 
 
-def product_list(request):
-    products = product.objects.all()
-    return render(request, 'product_list.html', {'products': products})
+# def product_list(request):
+#     products = product.objects.all()
+#     return render(request, 'product_list.html', {'products': products})
 
 @login_required
 def view_cart(request):

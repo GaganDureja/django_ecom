@@ -25,4 +25,5 @@ def cart_items(request):
         cart_items_top = CartItem.objects.filter(cart=user_cart)
     return {
         'cart_items_top': cart_items_top,
+        'total_cart_items': cart_items_top.count()
     }

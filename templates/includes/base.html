@@ -178,7 +178,7 @@
 							<ul class="top_tools">
 								<li>
 									<div class="dropdown dropdown-cart">
-										<a href="{% url 'view_cart' %}" class="cart_bt"><strong>2</strong></a>
+										<a href="{% url 'view_cart' %}" class="cart_bt"><strong>{{total_cart_items}}</strong></a>
 										<div class="dropdown-menu">
 											<ul>
 												{% for cart_item in cart_items_top %}
@@ -377,11 +377,6 @@
 
 
 	<!-- SPECIFIC SCRIPTS -->
-	<script src="{% static 'js/carousel-home.min.js' %}"></script>
-	<script src="{% static 'js/sticky_sidebar.min.js' %} "></script>
-	<!-- <script src="{% static 'js/specific_listing.js' %} "></script> -->
-	<script  src="{% static 'js/carousel_with_thumbs.js' %}"></script>
-
 
     {% block specific_js %}
 		
