@@ -189,14 +189,15 @@
 														{% endfor %}
 														<strong><span>{{cart_item.quantity}} x {{cart_item.product}}</span>{% widthratio cart_item.product.price 1 cart_item.quantity  %}</strong>
 													</a>
-													<a href="#0" class="action"><i class="ti-trash"></i></a>
+													<a href="{% url 'remove_from_cart' cart_item.id %}" class="action"><i class="ti-trash"></i></a>
 												</li>
 												{% endfor %}
 												 
 											</ul>
 											<div class="total_drop">
-												<div class="clearfix"><strong>Total</strong><span>$200.00</span></div>
-												<a href="{% url 'view_cart' %}" class="btn_1 outline">View Cart</a><a href="checkout.html" class="btn_1">Checkout</a>
+												<div class="clearfix"><strong>Total</strong><span> ₹ {{cart_total_price}}</span></div>
+												<a href="{% url 'view_cart' %}" class="btn_1 outline">View Cart</a>
+												<a href="{% url 'checkout' %}" class="btn_1">Checkout</a>
 											</div>
 										</div>
 									</div>

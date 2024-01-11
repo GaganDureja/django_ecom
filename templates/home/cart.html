@@ -55,13 +55,13 @@
 									</td>
 									<td>
 										<div class="numbers-row">
-											<input type="text" value="{{item.quantity}}" onclick="console.log('{{item.id}}',this.value)" id="quantity_{{item.id}}" class="qty2" name="quantity_1" readonly>
+											<input type="text" value="{{item.quantity}}" onclick="update_cart_item('{{item.id}}',this.value)" id="quantity_{{item.id}}" class="qty2" name="quantity_1" readonly>
 											<div class="inc button_inc">+</div>
 											<div class="dec button_inc">-</div>
 										</div>
 									</td>
 									<td>
-										<strong>₹  {% widthratio item.product.price 1 item.quantity  %}</strong>
+										<strong id="item_subtotal_{{item.id}}">₹  {% widthratio item.product.price 1 item.quantity  %}</strong>
 									</td>
 									<td class="options">
 										<a href="{% url 'remove_from_cart' item.id %}"><i class="ti-trash"></i></a>
@@ -96,14 +96,12 @@
 				<div class="row justify-content-end">
 					<div class="col-xl-4 col-lg-4 col-md-6">
 						<ul>
-							<li>
-								<span>Subtotal</span>₹ {{total_price}}
-							</li>
-							<li>
+							
+							<li id="final_amount">
 								<span>Total</span> ₹ {{total_price}}
 							</li>
 						</ul>
-						<a href="#" class="btn_1 full-width cart">Proceed to Checkout</a>
+						<a href="{% url 'checkout' %}" class="btn_1 full-width cart">Proceed to Checkout</a>
 					</div>
 				</div>
 			</div>
@@ -115,9 +113,36 @@
 {% endblock %}	
 
 
+{% block specific_js %}
+
 
 <script>
-	function update_cart_item(cart_id,new_val){
-		console.log(cart_id,new_val);
+	function update_cart_item(cart_item_id,new_quantity){
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/update_cart_item/' + cart_item_id + '/' + new_quantity + '/');
+		// var csrfToken = getCookie('csrftoken');
+		
+		var csrfToken = '{{ csrf_token }}';
+
+		xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('X-CSRFToken', csrfToken);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {	
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        Swal.fire({ title: "", text: "Quantity updated successfully", icon: "success", });
+						$("#item_subtotal_"+cart_item_id).html('₹ ' + response.new_subtotal);
+						$("#final_amount").html('₹ ' + response.total);
+                    } else {
+						Swal.fire({ title: "", text: "Cart item not found", icon: "error", });
+                    }
+                } else {
+					Swal.fire({ title: "", text: "Error updating quantity", icon: "error", });
+                }
+            }
+        };
+        xhr.send();
 	}
 </script>
+{% endblock %}	

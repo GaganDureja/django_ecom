@@ -23,7 +23,9 @@ def cart_items(request):
     else:
         user_cart, created = Cart.objects.get_or_create(user=request.user)
         cart_items_top = CartItem.objects.filter(cart=user_cart)
+        total_price = sum(item.total_price() for item in cart_items_top)
     return {
         'cart_items_top': cart_items_top,
-        'total_cart_items': cart_items_top.count()
+        'total_cart_items': cart_items_top.count(),
+        'cart_total_price': total_price,
     }

@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.utils import timezone
 import datetime
@@ -14,6 +14,8 @@ from products.views import *
 from blogs.views import *
 
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+
 
 
 def all_banner(request):
@@ -100,7 +102,48 @@ def remove_from_cart(request, cart_item_id):
         return redirect(Signup)
     cart_item = get_object_or_404(CartItem, pk=cart_item_id)
     cart_item.delete()
-    return redirect('view_cart')
+
+    referring_url = request.META.get('HTTP_REFERER', 'home')
+    
+    # Redirect back to the referring URL
+    return redirect(referring_url)
+
+
+
+@require_POST
+def update_cart_item(request, item_id, new_quantity):
+    try:
+        cart_item = CartItem.objects.get(id=item_id)
+        cart_item.quantity = new_quantity
+        cart_item.save()    
+            
+        new_subtotal = cart_item.product.price*new_quantity
+        cart_items = CartItem.objects.filter(cart=cart_item.cart)
+        total = sum(item.total_price() for item in cart_items)
+
+        response_data = {'success': True, 'message': 'Quantity updated successfully','new_subtotal':new_subtotal,'total':total}
+    except CartItem.DoesNotExist:        
+        response_data = {'success': False, 'message': 'Cart item not found'}
+
+    return JsonResponse(response_data)
+
+
+
+
+@login_required
+def checkout(request):
+    user_cart, created = Cart.objects.get_or_create(user=request.user)
+    cart_items = CartItem.objects.filter(cart=user_cart)
+    total_price = sum(item.total_price() for item in cart_items)
+    return render(request, 'home/checkout.html', {'cart_items': cart_items, 'total_price': total_price})
+
+
+
+
+
+
+
+
 
 def Signup(request): 
     if request.user.is_authenticated:

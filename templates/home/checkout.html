@@ -16,11 +16,10 @@
 			<div class="breadcrumbs">
 				<ul>
 					<li><a href="#">Home</a></li>
-					<li><a href="#">Category</a></li>
-					<li>Page active</li>
+					<li>Checkout</li>
 				</ul>
 		</div>
-		<h1>Sign In or Create an Account</h1>
+		<h1>Confirm Details and pay</h1>
 			
 	</div>
 	<!-- /page_header -->
@@ -224,11 +223,15 @@
 						<h3>3. Order Summary</h3>
 					<div class="box_general summary">
 						<ul>
-							<li class="clearfix"><em>1x Armor Air X Fear</em>  <span>$145.00</span></li>
-							<li class="clearfix"><em>2x Armor Air Zoom Alpha</em> <span>$115.00</span></li>
+							{% for item in cart_items %}
+							<li class="clearfix">
+								<em>{{item.quantity}}x {{item.product}}</em>
+								<span>{% widthratio item.product.price 1 item.quantity  %}</span>
+							</li>
+							{% endfor %}
 						</ul>
 						<ul>
-							<li class="clearfix"><em><strong>Subtotal</strong></em>  <span>$450.00</span></li>
+							<li class="clearfix"><em><strong>Subtotal</strong></em>  <span>₹ {{total_price}}</span></li>
 							<li class="clearfix"><em><strong>Shipping</strong></em> <span>$0</span></li>
 							
 						</ul>
