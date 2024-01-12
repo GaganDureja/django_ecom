@@ -73,7 +73,7 @@
 
 			<div class="row add_top_30 flex-sm-row-reverse cart_actions">
 				<div class="col-sm-4 text-end">
-					<button type="button" class="btn_1 gray">Update Cart</button>
+					<!-- <button type="button" class="btn_1 gray">Update Cart</button> -->
 				</div>
 					<div class="col-sm-8">
 					<div class="apply-coupon">
@@ -132,7 +132,7 @@
 						if (response.success) {
 							Swal.fire({ title: "", text: "Quantity updated successfully", icon: "success", });
 							$("#item_subtotal_"+cart_item_id).html('₹ ' + response.new_subtotal);
-							$("#final_amount").html('₹ ' + response.total);
+							$("#final_amount").html('<span>Total</span> ₹ ' + response.total);
 						} else {
 							Swal.fire({ title: "", text: "Cart item not found", icon: "error", });
 						}

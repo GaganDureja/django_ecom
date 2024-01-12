@@ -138,6 +138,32 @@ def checkout(request):
     return render(request, 'home/checkout.html', {'cart_items': cart_items, 'total_price': total_price})
 
 
+
+@login_required
+def view_address(request):
+    user_add = Address.objects.filter(user=request.user)
+    return {'user_add':user_add}
+    
+
+@login_required
+def add_address(request):
+    Address.objects.create(
+        user = request.user,
+        full_name = request.POST.get('full_name'),
+        phone = request.POST.get('phone'),
+        alt_phone = request.POST.get('alt_phone'),
+        pincode = request.POST.get('pincode'),
+        state = request.POST.get('state'),
+        city = request.POST.get('city'),
+        house_building = request.POST.get('house_building'),
+        road_area = request.POST.get('road_area'),
+        nearby = request.POST.get('nearby'),
+        address_type = request.POST.get('address_type'),
+    )
+    response_data = {'success': True, 'message': 'Address saved successfully'}
+    return JsonResponse(response_data)
+
+
 def Signup(request): 
     next_url =  request.POST.get('next')
     if request.user.is_authenticated:

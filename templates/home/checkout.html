@@ -28,57 +28,12 @@
 					<div class="step first">
 						<h3>1. User Info and Billing address</h3>
 					 
-					<div class="tab-content checkout">
-						<div class="tab-pane fade show active" id="tab_1" role="tabpanel" aria-labelledby="tab_1">
-							<div class="form-group">
-								<input type="email" class="form-control" placeholder="Email">
+						<div class="tab-content checkout">
+							<a href="#0" class="info" data-bs-toggle="modal" data-bs-target="#save_address">Add New Address</a>
+							<div class="tab-pane fade show active" id="address_tab" role="tabpanel" aria-labelledby="tab_1">
+								
 							</div>
-							<!-- <div class="form-group">
-								<input type="password" class="form-control" placeholder="Password">
-							</div> -->
-							<hr>
-							<div class="row no-gutters">
-								<div class="col-6 form-group pr-1">
-									<input type="text" class="form-control" placeholder="Name">
-								</div>
-								<div class="col-6 form-group pl-1">
-									<input type="text" class="form-control" placeholder="Last Name">
-								</div>
-							</div>
-							<!-- /row -->
-							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Full Address">
-							</div>
-							<div class="row no-gutters">
-								<div class="col-6 form-group pr-1">
-									<input type="text" class="form-control" placeholder="City">
-								</div>
-								<div class="col-6 form-group pl-1">
-									<input type="text" class="form-control" placeholder="Postal code">
-								</div>
-							</div>
-							<!-- /row -->
-							<div class="row no-gutters">
-								<div class="col-md-12 form-group">
-									<div class="custom-select-form">
-										<select class="wide add_bottom_15" name="country" id="country">
-											<option value="" selected>Country</option>
-											<option value="Europe">Europe</option>
-											<option value="United states">United states</option>
-											<option value="Asia">Asia</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<!-- /row -->
-							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Telephone">
-							</div>
-							<hr>
 						</div>
-						 
-					   
-					</div>
 					</div>
 					<!-- /step -->
 				</div>
@@ -144,24 +99,19 @@
 							{% for item in cart_items %}
 							<li class="clearfix">
 								<em>{{item.quantity}}x {{item.product}}</em>
-								<span>{% widthratio item.product.price 1 item.quantity  %}</span>
+								<span>₹ {% widthratio item.product.price 1 item.quantity  %}</span>
 							</li>
 							{% endfor %}
 						</ul>
 						<ul>
 							<li class="clearfix"><em><strong>Subtotal</strong></em>  <span>₹ {{total_price}}</span></li>
-							<li class="clearfix"><em><strong>Shipping</strong></em> <span>$0</span></li>
+							<li class="clearfix"><em><strong>Shipping</strong></em> <span>₹ 0</span></li>
 							
 						</ul>
-						<div class="total clearfix">TOTAL <span>$450.00</span></div>
-						<div class="form-group">
-								<label class="container_check">Register to the Newsletter.
-								  <input type="checkbox" checked>
-								  <span class="checkmark"></span>
-								</label>
-							</div>
+						<div class="total clearfix">TOTAL <span>₹ {{total_price}}</span></div>
 						
-						<a href="confirm.html" class="btn_1 full-width">Confirm and Pay</a>
+						
+						<a href="#" class="btn_1 full-width">Confirm and Pay</a>
 					</div>
 					<!-- /box_general -->
 					</div>
@@ -173,6 +123,90 @@
 		<!-- /container -->
 	</main>
 	<!--/main-->
-	
+
+
+	<!-- Modal Payments Method-->
+	<div class="modal fade" id="payments_method" tabindex="-1" role="dialog" aria-labelledby="payments_method_title" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+		  	<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="payments_method_title">Payments Methods</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+				<p>Lorem ipsum dolor sit amet, oratio possim ius cu. Labore prompta nominavi sea ei. Sea no animal saperet gloriatur, ius iusto ullamcorper ad. Qui ignota reformidans ei, vix in elit conceptam adipiscing, quaestio repudiandae delicatissimi vis ei. Fabulas accusamus no has.</p>
+				<p>Et nam vidit zril, pri elaboraret suscipiantur ut. Duo mucius gloriatur at, in vis integre labitur dolores, mei omnis utinam labitur id. An eum prodesset appellantur. Ut alia nemore mei, at velit veniam vix, nonumy propriae conclusionemque ea cum.</p>
+				</div>
+		  	</div>
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="save_address" tabindex="-1" role="dialog" aria-labelledby="save_address_title" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+		  	<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="save_address_title">Add New Address</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="tab-pane fade show active" id="tab_1" role="tabpanel" aria-labelledby="tab_1">
+						
+						<div class="form-group">
+							<input type="text" name="full_name" class="form-control" placeholder="Full Name">
+						</div>
+
+						<div class="form-group">
+							<input type="text" name="phone" class="form-control" placeholder="Phone">
+						</div>
+
+						<div class="form-group">
+							<input type="text" name="alt_phone" class="form-control" placeholder="Altername Phone">
+						</div>
+
+						<div class="row no-gutters">
+							<div class="col-6 form-group pr-1">
+								<input type="text" name="pincode" class="form-control" placeholder="Pincode">
+							</div>
+							<div class="col-6 form-group pl-1">
+								<input type="text" name="city" class="form-control" placeholder="City">
+							</div>
+						</div>
+						<div class="row no-gutters">
+							<div class="col-6 form-group pr-1">
+								<input type="text" name="state" class="form-control" placeholder="State">
+							</div>
+							<div class="col-6 form-group pl-1">
+								<div class="custom-select-form">
+									<select class="wide add_bottom_15" name="address_type" id="country">
+										<option value="" selected>Address Type</option>
+										<option value="Home">Home</option>
+										<option value="Work">Work</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<input type="text" name="house_building" class="form-control" placeholder="House or Building">
+						</div>
+
+						<div class="form-group">
+							<input type="text" name="road_area" class="form-control" placeholder="Road or Area">
+						</div>
+
+						<div class="form-group">
+							<input type="text" name="nearby" class="form-control" placeholder="Nearby">
+						</div>
+						 
+					</div>
+				</div>
+		  	</div>
+		</div>
+	</div>
+
+
+
+
 {% endblock %}
 
