@@ -138,13 +138,6 @@ def checkout(request):
     return render(request, 'home/checkout.html', {'cart_items': cart_items, 'total_price': total_price})
 
 
-
-
-
-
-
-
-
 def Signup(request): 
     if request.user.is_authenticated:
         messages.warning(request, "Already Logged in")
@@ -171,21 +164,30 @@ def Signup(request):
         
 
 def Signin(request):
+    next_url =  request.GET.get('next')
+    print(next_url)
+    
     if request.user.is_authenticated:
         messages.warning(request, "Already Logged in")
         return redirect('home')
     else:
         if request.method == 'GET':
             return render(request,'home/account.html')
-        if request.method == 'POST':
+        if request.method == 'POST':            
             if User.objects.filter(email=request.POST.get('email')):
-                user = authenticate(request, username=request.POST.get('email'), password=request.POST.get('password_in'))
+                user = authenticate(
+                        request, 
+                        username=request.POST.get('email'), 
+                        password=request.POST.get('password_in')
+                    )
                 if user:
                     login(request, user)    
                     messages.success(request, "Login success")
-                    if request.GET.get('next'):
-                        return redirect(request.GET.get('next'))
+                    if next_url:
+                        print("yes next",next_url)
+                        return redirect(next_url)
                     else:
+                        print("no next",next_url)
                         return redirect('home')
                 else:
                     messages.error(request, "Incorrect password!!!")

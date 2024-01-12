@@ -1,4 +1,5 @@
 {% extends "includes/base.html" %}
+{% load static %}
 
 
 
@@ -26,6 +27,7 @@
 				<div class="box_account">
 					<form action="{% url 'users:Signin' %}" id="signin_form" method="POST">
 						{% csrf_token %}
+						<input type="hidden" name="next" value="{{ request.GET.get('next') }}">
 					<h3 class="client">Already Client</h3>
 					<div class="form_container">
 						<div class="row no-gutters">
