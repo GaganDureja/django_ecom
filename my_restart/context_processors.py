@@ -19,7 +19,7 @@ def global_categories(request):
 
 def cart_items(request):
     if not request.user.is_authenticated:
-        cart_items_top,total_price,cart_items_top_count = "","",""
+        cart_items_top,total_price,cart_items_top_count = "","",0
     else:
         user_cart, created = Cart.objects.get_or_create(user=request.user)
         cart_items_top = CartItem.objects.filter(cart=user_cart)

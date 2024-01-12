@@ -27,7 +27,7 @@
 				<div class="box_account">
 					<form action="{% url 'users:Signin' %}" id="signin_form" method="POST">
 						{% csrf_token %}
-						<input type="hidden" name="next" value="{{ request.GET.get('next') }}">
+						<input type="hidden" name="next" value="{{ request.GET.next }}">
 					<h3 class="client">Already Client</h3>
 					<div class="form_container">
 						<div class="row no-gutters">
@@ -91,6 +91,7 @@
 				<div class="box_account">
 					<form action="{% url 'users:Signup' %}" id="signup_form" method="POST">
 					{% csrf_token %}
+					<input type="hidden" name="next" value="{{ request.GET.next }}">
 					<h3 class="new_client">New Client</h3> <small class="float-right pt-2">* Required Fields</small>
 					<div class="form_container">
 						<div class="form-group">

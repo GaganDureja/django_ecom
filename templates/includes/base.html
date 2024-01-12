@@ -179,6 +179,7 @@
 								<li>
 									<div class="dropdown dropdown-cart">
 										<a href="{% url 'view_cart' %}" class="cart_bt"><strong>{{total_cart_items}}</strong></a>
+										{% if user.is_authenticated %}
 										<div class="dropdown-menu">
 											<ul>
 												{% for cart_item in cart_items_top %}
@@ -200,6 +201,7 @@
 												<a href="{% url 'checkout' %}" class="btn_1">Checkout</a>
 											</div>
 										</div>
+										{% endif %}
 									</div>
 									<!-- /dropdown-cart-->
 								</li>

@@ -139,6 +139,7 @@ def checkout(request):
 
 
 def Signup(request): 
+    next_url =  request.POST.get('next')
     if request.user.is_authenticated:
         messages.warning(request, "Already Logged in")
         return redirect('home')
@@ -160,12 +161,14 @@ def Signup(request):
             )
 
             messages.success(request, "User registered successfully!")
-            return redirect('users:Signup')
+            if next_url:
+                return redirect(next_url)
+            else:
+                return redirect('users:Signup')
         
 
 def Signin(request):
-    next_url =  request.GET.get('next')
-    print(next_url)
+    next_url =  request.POST.get('next')
     
     if request.user.is_authenticated:
         messages.warning(request, "Already Logged in")
@@ -173,7 +176,7 @@ def Signin(request):
     else:
         if request.method == 'GET':
             return render(request,'home/account.html')
-        if request.method == 'POST':            
+        if request.method == 'POST':
             if User.objects.filter(email=request.POST.get('email')):
                 user = authenticate(
                         request, 
@@ -184,10 +187,8 @@ def Signin(request):
                     login(request, user)    
                     messages.success(request, "Login success")
                     if next_url:
-                        print("yes next",next_url)
                         return redirect(next_url)
                     else:
-                        print("no next",next_url)
                         return redirect('home')
                 else:
                     messages.error(request, "Incorrect password!!!")
