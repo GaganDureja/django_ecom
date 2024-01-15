@@ -194,10 +194,32 @@ def add_address(request):
         return JsonResponse(response_data, status=405)
     
 
-
+import stripe
 @login_required
 def payment(request):
-    pass
+    stripe.api_key = "sk_test_tR3PYbcVNZZ796tH88S4VQ2u"
+
+    token = request.POST.get("stripeToken")
+    amount = 1000  # Amount in cents
+
+    try:
+        charge = stripe.Charge.create(
+            amount=amount,
+            currency="usd",
+            source=token,
+            description="Payment for your product or service",
+        )
+
+        # Process successful payment (update database, send confirmation email, etc.)
+        # ...
+
+        return JsonResponse({'success': True, 'message': 'Payment successful'})
+
+    except stripe.error.CardError as e:
+        return JsonResponse({'success': False, 'message': f'Card error: {e.error.message}'}, status=400)
+
+    except stripe.error.StripeError as e:
+        return JsonResponse({'success': False, 'message': f'Payment failed: {e.error.message}'}, status=500)
 
 def Signup(request): 
     next_url =  request.POST.get('next')

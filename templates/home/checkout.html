@@ -25,7 +25,7 @@
 		<!-- /page_header -->
 
 
-		<form id="final_submit" method="post" action="">
+		<form id="final_submit" method="post" action="{% url 'payment' %}">
 			<div class="row">
 				<div class="col-lg-4 col-md-6">
 					<div class="step first">
@@ -86,10 +86,10 @@
 						</ul>
 						<ul>
 							<li class="clearfix"><em><strong>Subtotal</strong></em>  <span>₹ {{total_price}}</span></li>
-							<li class="clearfix"><em><strong>Shipping</strong></em> <span>₹ 0</span></li>
+							<li class="clearfix"><em><strong>Shipping</strong></em> <span id="shipping_charge">₹ 0</span></li>
 							
 						</ul>
-						<div class="total clearfix">TOTAL <span>₹ {{total_price}}</span></div>
+						<div class="total clearfix">TOTAL <span id="final_charge">₹ {{total_price}}</span></div>
 						
 						
 						<a href="#" class="btn_1 full-width">Confirm and Pay</a>
@@ -285,6 +285,19 @@
 					save_address(form)
 				}
 			});
+		}
+	</script>
+
+
+	<script>
+		function shipping_method(str){
+			shipping_cost = 0;
+			if(str == 2){
+				shipping_cost = 100;
+			}
+			$("#shipping_charge").html('₹ ' + shipping_cost);
+			total = shipping_cost + parseInt('{{ total_price }}');
+			$("#final_charge").html('₹ ' + total );			
 		}
 	</script>
 
