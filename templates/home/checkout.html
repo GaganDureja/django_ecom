@@ -18,19 +18,22 @@
 					<li><a href="#">Home</a></li>
 					<li>Checkout</li>
 				</ul>
-		</div>
-		<h1>Confirm Details and pay</h1>
+			</div>
+			<h1>Confirm Details and pay</h1>
 			
-	</div>
-	<!-- /page_header -->
+		</div>
+		<!-- /page_header -->
+
+
+		<form id="final_submit" method="post" action="">
 			<div class="row">
 				<div class="col-lg-4 col-md-6">
 					<div class="step first">
-						<h3>1. User Info and Billing address</h3>
+						<h3>1.  Billing address</h3>
 					 
 						<div class="tab-content checkout">
 							<a href="#0" class="info" data-bs-toggle="modal" data-bs-target="#save_address">Add New Address</a>
-							<div class="tab-pane fade show active" id="address_tab" role="tabpanel" aria-labelledby="tab_1">
+							<div class="tab-pane fade show active mt-2" id="address_tab" role="tabpanel" aria-labelledby="tab_1">
 								
 							</div>
 						</div>
@@ -39,34 +42,12 @@
 				</div>
 				<div class="col-lg-4 col-md-6">
 					<div class="step middle payments">
-						<h3>2. Payment and Shipping</h3>
-							<ul>
-								<li>
-									<label class="container_radio">Credit Card<a href="#0" class="info" data-bs-toggle="modal" data-bs-target="#payments_method"></a>
-										<input type="radio" name="payment" checked>
-										<span class="checkmark"></span>
-									</label>
-								</li>
-								<li>
-									<label class="container_radio">Paypal<a href="#0" class="info" data-bs-toggle="modal" data-bs-target="#payments_method"></a>
-										<input type="radio" name="payment">
-										<span class="checkmark"></span>
-									</label>
-								</li>
-								<li>
-									<label class="container_radio">Cash on delivery<a href="#0" class="info" data-bs-toggle="modal" data-bs-target="#payments_method"></a>
-										<input type="radio" name="payment">
-										<span class="checkmark"></span>
-									</label>
-								</li>
-								<li>
-									<label class="container_radio">Bank Transfer<a href="#0" class="info" data-bs-toggle="modal" data-bs-target="#payments_method"></a>
-										<input type="radio" name="payment">
-										<span class="checkmark"></span>
-									</label>
-								</li>
-							</ul>
-							<div class="payment_info d-none d-sm-block"><figure><img src="{% static 'img/cards_all.svg' %}" alt=""></figure>	<p>Sensibus reformidans interpretaris sit ne, nec errem nostrum et, te nec meliore philosophia. At vix quidam periculis. Solet tritani ad pri, no iisque definitiones sea.</p></div>
+						<h3>2. Shipping</h3>
+							
+							<div class="payment_info d-none d-sm-block">
+								<figure><img src="{% static 'img/cards_all.svg' %}" alt=""></figure>
+								<p>All types of payment methrods accepted.</p>
+							</div>
 							
 							<h6 class="pb-2">Shipping Method</h6>
 							
@@ -74,13 +55,13 @@
 						<ul>
 								<li>
 									<label class="container_radio">Standard shipping<a href="#0" class="info" data-bs-toggle="modal" data-bs-target="#payments_method"></a>
-										<input type="radio" name="shipping" checked>
+										<input type="radio" name="shipping" onclick="shipping_method('1')" checked>
 										<span class="checkmark"></span>
 									</label>
 								</li>
 								<li>
 									<label class="container_radio">Express shipping<a href="#0" class="info" data-bs-toggle="modal" data-bs-target="#payments_method"></a>
-										<input type="radio" name="shipping">
+										<input type="radio" name="shipping" onclick="shipping_method('2')">
 										<span class="checkmark"></span>
 									</label>
 								</li>
@@ -119,6 +100,7 @@
 				</div>
 			</div>
 			<!-- /row -->
+		</form>
 		</div>
 		<!-- /container -->
 	</main>
@@ -130,12 +112,17 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 		  	<div class="modal-content">
 				<div class="modal-header">
-				<h5 class="modal-title" id="payments_method_title">Payments Methods</h5>
+				<h5 class="modal-title" id="payments_method_title">Shipping Methods</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-				<p>Lorem ipsum dolor sit amet, oratio possim ius cu. Labore prompta nominavi sea ei. Sea no animal saperet gloriatur, ius iusto ullamcorper ad. Qui ignota reformidans ei, vix in elit conceptam adipiscing, quaestio repudiandae delicatissimi vis ei. Fabulas accusamus no has.</p>
-				<p>Et nam vidit zril, pri elaboraret suscipiantur ut. Duo mucius gloriatur at, in vis integre labitur dolores, mei omnis utinam labitur id. An eum prodesset appellantur. Ut alia nemore mei, at velit veniam vix, nonumy propriae conclusionemque ea cum.</p>
+					<h5>Standard Shipping</h5>
+					<p>Delivered in 5-15 days with no extra charges.</p>
+
+					<h5>Express Shipping</h5>
+					<p>Delivered in 1-3 days Addition of INR 100 to be paid.</p>
+					
+					
 				</div>
 		  	</div>
 		</div>
@@ -151,53 +138,60 @@
 				</div>
 				<div class="modal-body">
 					<div class="tab-pane fade show active" id="tab_1" role="tabpanel" aria-labelledby="tab_1">
-						
-						<div class="form-group">
-							<input type="text" name="full_name" class="form-control" placeholder="Full Name">
-						</div>
-
-						<div class="form-group">
-							<input type="text" name="phone" class="form-control" placeholder="Phone">
-						</div>
-
-						<div class="form-group">
-							<input type="text" name="alt_phone" class="form-control" placeholder="Altername Phone">
-						</div>
-
-						<div class="row no-gutters">
-							<div class="col-6 form-group pr-1">
-								<input type="text" name="pincode" class="form-control" placeholder="Pincode">
+						<form method="post" id="address_form" action="">
+							{% csrf_token %}
+							<div class="form-group">
+								<input type="text" name="full_name" class="form-control" placeholder="Full Name">
 							</div>
-							<div class="col-6 form-group pl-1">
-								<input type="text" name="city" class="form-control" placeholder="City">
+
+							<div class="form-group">
+								<input type="text" name="phone" class="form-control" placeholder="Phone">
 							</div>
-						</div>
-						<div class="row no-gutters">
-							<div class="col-6 form-group pr-1">
-								<input type="text" name="state" class="form-control" placeholder="State">
+
+							<div class="form-group">
+								<input type="text" name="alt_phone" class="form-control" placeholder="Altername Phone">
 							</div>
-							<div class="col-6 form-group pl-1">
-								<div class="custom-select-form">
-									<select class="wide add_bottom_15" name="address_type" id="country">
-										<option value="" selected>Address Type</option>
-										<option value="Home">Home</option>
-										<option value="Work">Work</option>
-									</select>
+
+							<div class="row no-gutters">
+								<div class="col-6 form-group pr-1">
+									<input type="text" name="pincode" class="form-control" placeholder="Pincode">
+								</div>
+								<div class="col-6 form-group pl-1">
+									<input type="text" name="city" class="form-control" placeholder="City">
 								</div>
 							</div>
-						</div>
+							<div class="row no-gutters">
+								<div class="col-6 form-group pr-1">
+									<input type="text" name="state" class="form-control" placeholder="State">
+								</div>
+								<div class="col-6 form-group pl-1">
+									<div class="custom-select-form">
+										<select class="wide add_bottom_15" name="address_type" id="country">
+											<option value="" selected>Address Type</option>
+											<option value="Home">Home</option>
+											<option value="Work">Work</option>
+										</select>
+									</div>
+								</div>
+							</div>
 
-						<div class="form-group">
-							<input type="text" name="house_building" class="form-control" placeholder="House or Building">
-						</div>
+							<div class="form-group">
+								<input type="text" name="house_building" class="form-control" placeholder="House or Building">
+							</div>
 
-						<div class="form-group">
-							<input type="text" name="road_area" class="form-control" placeholder="Road or Area">
-						</div>
+							<div class="form-group">
+								<input type="text" name="road_area" class="form-control" placeholder="Road or Area">
+							</div>
 
-						<div class="form-group">
-							<input type="text" name="nearby" class="form-control" placeholder="Nearby">
-						</div>
+							<div class="form-group">
+								<input type="text" name="nearby" class="form-control" placeholder="Nearby">
+							</div>
+
+							<div class="form-group">
+								<button type="submit"  onclick="validate_address()" class="btn btn-success">Save</button>
+							</div>
+
+						</form>
 						 
 					</div>
 				</div>
@@ -209,4 +203,92 @@
 
 
 {% endblock %}
+
+{% block specific_js %}]
+	<script>
+		function load_address(){			
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', '/address/');
+			xhr.setRequestHeader('Content-Type', 'application/json');
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4) {
+					if (xhr.status === 200) {
+						var response = JSON.parse(xhr.responseText);
+						if (response.success) {				
+							displayAddresses(response.message);			
+						} else {
+							Swal.fire({ title: "", text: "No address found please click on add new address", icon: "info", });
+						}
+					} else {
+						Swal.fire({ title: "", text: "Error getting Address", icon: "error", });
+					}
+				}
+			};
+			xhr.send();
+		}
+		load_address();
+
+		function displayAddresses(addresses) {
+			var addressTab = $("#address_tab");
+			addressTab.empty();
+			if (addresses.length > 0) {			
+				for (var i = 0; i < addresses.length; i++) {
+					addressTab.append('<label class="container_radio"><b>'+ addresses[i].full_name + '</b><br> '+  addresses[i].house_building + ', '+  addresses[i].road_area + ', '+  addresses[i].nearby + ', ' +  addresses[i].city + ', ' +  addresses[i].state + ' - ' + addresses[i].pincode + ' <br> '+ addresses[i].phone + '<input type="radio" name="address_id" value="' + addresses[i].id + '">	<span class="checkmark"></span></label>');
+				}
+			} else {
+				addressTab.html("No addresses found.");
+			}
+		}
+
+		
+	</script>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+
+
+	<script>
+		function save_address(form) {
+			
+			var formData = $(form).serialize();	
+			$.ajax({
+				type: 'POST',
+				url: '/add-address/',
+				data: formData,
+				success: function(response) {
+					$('#save_address').modal('toggle');
+					$("#address_form").trigger('reset');
+					load_address();
+					Swal.fire({ title: "", text: response.message, icon: "success", });
+				},
+				error: function(error) {	
+					Swal.fire({ title: "", text: JSON.parse(error.responseText).message, icon: "error", });
+				}
+			});
+				
+		}
+	</script>
+
+	<script>
+		function validate_address() {
+			$("#address_form").validate({
+				rules :{
+					full_name : {
+						required : true
+					}
+				},
+				messages :{
+					full_name : {
+						required : 'Enter Full Name'
+					}
+				},
+				submitHandler: function (form) {
+					save_address(form)
+				}
+			});
+		}
+	</script>
+
+	 
+{% endblock %}
+
 

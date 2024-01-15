@@ -15,7 +15,7 @@ from blogs.views import *
 
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-
+from django.core.exceptions import ValidationError
 
 
 def all_banner(request):
@@ -141,28 +141,63 @@ def checkout(request):
 
 @login_required
 def view_address(request):
-    user_add = Address.objects.filter(user=request.user)
-    return {'user_add':user_add}
+    user_add = Address.objects.filter(user=request.user).values()
+    if(user_add):
+        response_data = {'success': True, 'message': list(user_add)}
+    else:
+        response_data = {'success': False, 'message': 'No Address found'}
+    return JsonResponse(response_data)
+    # return {'user_add':user_add}
     
 
 @login_required
 def add_address(request):
-    Address.objects.create(
-        user = request.user,
-        full_name = request.POST.get('full_name'),
-        phone = request.POST.get('phone'),
-        alt_phone = request.POST.get('alt_phone'),
+    if request.method == 'POST':        
+        full_name = request.POST.get('full_name')
+        phone = request.POST.get('phone')
         pincode = request.POST.get('pincode'),
         state = request.POST.get('state'),
         city = request.POST.get('city'),
         house_building = request.POST.get('house_building'),
-        road_area = request.POST.get('road_area'),
-        nearby = request.POST.get('nearby'),
-        address_type = request.POST.get('address_type'),
-    )
-    response_data = {'success': True, 'message': 'Address saved successfully'}
-    return JsonResponse(response_data)
+        road_area = request.POST.get('road_area')
 
+        if not (full_name and phone and pincode and state and city and house_building and road_area):
+            response_data = {'success': False, 'message': 'Invalid form data'}
+            return JsonResponse(response_data, status=400)
+
+        
+
+        try:
+            Address.objects.create(
+                user = request.user,
+                full_name = request.POST.get('full_name'),
+                phone = request.POST.get('phone'),
+                alt_phone = request.POST.get('alt_phone'),
+                pincode = request.POST.get('pincode'),
+                state = request.POST.get('state'),
+                city = request.POST.get('city'),
+                house_building = request.POST.get('house_building'),
+                road_area = request.POST.get('road_area'),
+                nearby = request.POST.get('nearby'),
+                address_type = request.POST.get('address_type'),
+            )
+            response_data = {'success': True, 'message': 'Address saved successfully'}
+            return JsonResponse(response_data)
+        except ValidationError as e:
+                response_data = {'success': False, 'message': f'Validation error: {str(e)}'}
+                return JsonResponse(response_data, status=400)
+        except Exception as e:
+            response_data = {'success': False, 'message': f'Error saving address: {str(e)}'}
+            return JsonResponse(response_data, status=500)
+    else:
+        response_data = {'success': False, 'message': 'Invalid request method'}
+        return JsonResponse(response_data, status=405)
+    
+
+
+@login_required
+def payment(request):
+    pass
 
 def Signup(request): 
     next_url =  request.POST.get('next')
