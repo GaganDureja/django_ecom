@@ -38,6 +38,7 @@ urlpatterns = [
     path('add-address/', add_address, name='add_address'),
     path('pay/', payment, name='payment'),
     path('checkout-session/', create_checkout_session, name='api_checkout_session'),
+    path('order-details', order_details, name="view_order_details"),
 
 
     

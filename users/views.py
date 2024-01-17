@@ -289,39 +289,40 @@ def user_logout(request):
         messages.warning(request, "Already Logged out")
     return redirect('users:Signin')
 
-from django.conf import settings
 
-# stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
+def order_details(request):
+    return render(request,'home/order-details.html')
+
+
+
+from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 
 @csrf_exempt
 def create_checkout_session(request): 
     stripe.api_key = settings.STRIPE_SECRET_KEY
-    checkout_session = stripe.checkout.Session.create(
-        # Customer Email is optional,
-        # It is not safe to accept email directly from the client side
-        customer_email = 'gagandureja675@gmail.com',
-        payment_method_types=['card'],
-        line_items=[
+    checkout_session = stripe.checkout.Session.create(        
+        customer_email = request.user.email,
+        payment_method_types = ['card'],
+        line_items = [
             {
                 'price_data': {
                     'currency': 'inr',
                     'product_data': {
                     'name': 'product_name',
                     },
-                    'unit_amount': int(111111),
+                    'unit_amount': int(400)*100,
                 },
                 'quantity': 1,
             }
         ],
-        mode='payment',
-        success_url=request.build_absolute_uri(
-            reverse('home')
-        ) + "?session_id={CHECKOUT_SESSION_ID}",
-        cancel_url=request.build_absolute_uri(reverse('checkout')),
+        mode = 'payment',
+        success_url = request.build_absolute_uri(reverse('home')) + "?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url = request.build_absolute_uri(reverse('checkout')),
     )
-    print(checkout_session,'cccccccccccccc')
 
     # OrderDetail.objects.create(
     #     customer_email=email,
