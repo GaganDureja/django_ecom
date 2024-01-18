@@ -306,23 +306,28 @@
 <script type="text/javascript">    
     var stripe = Stripe("pk_test_51BTUDGJAJfZb9HEBwDg86TN1KNprHjkfipXmEDMb0gSCassK5T3ZfxsAbcgKVmAIXF7oZ6ItlZZbXO6idTHE67IM007EwQ4uN3");
     function proceed_payment() {
-        fetch("{% url 'api_checkout_session' %}",{
-            method: 'POST'
-        })
-		.then(function (response) {
-			return response.json();
-		})
-		.then(function (session) {
-			return stripe.redirectToCheckout({ sessionId: session.sessionId });
-		})
-		.then(function (result) {
-			if (result.error) {
-				alert(result.error.message);
-			}
-		})
-		.catch(function (error) {
-			console.error('Error:', error);
-		});
+		address_id =  $("input[name='address_id']:checked").val();
+		alert(address_id)
+        // fetch("{% url 'api_checkout_session' %}",{
+        //     method: 'POST',
+		// 	body: JSON.stringify(
+        //         { aa: 'test' }
+        //     )
+        // })
+		// .then(function (response) {
+		// 	return response.json();
+		// })
+		// .then(function (session) {
+		// 	return stripe.redirectToCheckout({ sessionId: session.sessionId });
+		// })
+		// .then(function (result) {
+		// 	if (result.error) {
+		// 		alert(result.error.message);
+		// 	}
+		// })
+		// .catch(function (error) {
+		// 	console.error('Error:', error);
+		// });
 	} 
 
 </script> 

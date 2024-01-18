@@ -297,13 +297,20 @@ def order_details(request):
 
 
 
-from django.conf import settings
+# from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
+import json
 
 @csrf_exempt
 def create_checkout_session(request): 
-    stripe.api_key = settings.STRIPE_SECRET_KEY
+    request_data = json.loads(request.body)
+    print(request_data)
+    aa = request_data['aa']
+    print(aa)
+    # stripe.api_key = settings.STRIPE_SECRET_KEY
+    stripe.api_key = "sk_test_tR3PYbcVNZZ796tH88S4VQ2u"
+
     checkout_session = stripe.checkout.Session.create(        
         customer_email = request.user.email,
         payment_method_types = ['card'],
