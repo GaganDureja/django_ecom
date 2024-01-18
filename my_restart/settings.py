@@ -184,3 +184,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 # LOGIN_REDIRECT_URL = '/'
+
+# STRIPE_SECRET_KEY="sk_test_tR3PYbcVNZZ796tH88S4VQ2u"
+
+

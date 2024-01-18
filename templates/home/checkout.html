@@ -26,6 +26,7 @@
 
 
 		<form id="final_submit" method="post" action="{% url 'payment' %}">
+			{% csrf_token %}
 			<div class="row">
 				<div class="col-lg-4 col-md-6">
 					<div class="step first">
@@ -55,13 +56,13 @@
 						<ul>
 								<li>
 									<label class="container_radio">Standard shipping<a href="#0" class="info" data-bs-toggle="modal" data-bs-target="#payments_method"></a>
-										<input type="radio" name="shipping" onclick="shipping_method('1')" checked>
+										<input type="radio" name="shipping" value="1" onclick="shipping_method('1')" checked>
 										<span class="checkmark"></span>
 									</label>
 								</li>
 								<li>
 									<label class="container_radio">Express shipping<a href="#0" class="info" data-bs-toggle="modal" data-bs-target="#payments_method"></a>
-										<input type="radio" name="shipping" onclick="shipping_method('2')">
+										<input type="radio" name="shipping" value="2" onclick="shipping_method('2')">
 										<span class="checkmark"></span>
 									</label>
 								</li>
@@ -92,7 +93,7 @@
 						<div class="total clearfix">TOTAL <span id="final_charge">₹ {{total_price}}</span></div>
 						
 						
-						<a href="#" class="btn_1 full-width">Confirm and Pay</a>
+						<button type='submit' class="btn_1 full-width">Confirm and Pay</button>
 					</div>
 					<!-- /box_general -->
 					</div>
@@ -300,6 +301,9 @@
 			$("#final_charge").html('₹ ' + total );			
 		}
 	</script>
+
+
+
 
 	 
 {% endblock %}

@@ -37,6 +37,11 @@ urlpatterns = [
     path('address/', view_address, name='view_address'),
     path('add-address/', add_address, name='add_address'),
     path('pay/', payment, name='payment'),
+    path('checkout-session/', create_checkout_session, name='api_checkout_session'),
+    path('payment-details', payment_details, name="view_payment_details"),
+    path('orders/', orders_list, name="view_my_orders"),
+    path('order-details/<str:order>', order_details, name="view_order_details"),
+
 
     
     
