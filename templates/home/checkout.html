@@ -25,7 +25,8 @@
 		<!-- /page_header -->
 
 
-		<!-- <form id="final_submit" method="post" action="{% url 'payment' %}"> -->
+		<form id="final_submit" method="post" action="{% url 'payment' %}">
+			{% csrf_token %}
 			<div class="row">
 				<div class="col-lg-4 col-md-6">
 					<div class="step first">
@@ -55,13 +56,13 @@
 						<ul>
 								<li>
 									<label class="container_radio">Standard shipping<a href="#0" class="info" data-bs-toggle="modal" data-bs-target="#payments_method"></a>
-										<input type="radio" name="shipping" onclick="shipping_method('1')" checked>
+										<input type="radio" name="shipping" value="1" onclick="shipping_method('1')" checked>
 										<span class="checkmark"></span>
 									</label>
 								</li>
 								<li>
 									<label class="container_radio">Express shipping<a href="#0" class="info" data-bs-toggle="modal" data-bs-target="#payments_method"></a>
-										<input type="radio" name="shipping" onclick="shipping_method('2')">
+										<input type="radio" name="shipping" value="2" onclick="shipping_method('2')">
 										<span class="checkmark"></span>
 									</label>
 								</li>
@@ -92,7 +93,7 @@
 						<div class="total clearfix">TOTAL <span id="final_charge">₹ {{total_price}}</span></div>
 						
 						
-						<button type='button' class="btn_1 full-width" onclick="proceed_payment()">Confirm and Pay</button>
+						<button type='submit' class="btn_1 full-width">Confirm and Pay</button>
 					</div>
 					<!-- /box_general -->
 					</div>
@@ -100,7 +101,7 @@
 				</div>
 			</div>
 			<!-- /row -->
-		<!-- </form> -->
+		</form>
 		</div>
 		<!-- /container -->
 	</main>
@@ -302,35 +303,7 @@
 	</script>
 
 
-<script src="https://js.stripe.com/v3/"></script>
-<script type="text/javascript">    
-    var stripe = Stripe("pk_test_51BTUDGJAJfZb9HEBwDg86TN1KNprHjkfipXmEDMb0gSCassK5T3ZfxsAbcgKVmAIXF7oZ6ItlZZbXO6idTHE67IM007EwQ4uN3");
-    function proceed_payment() {
-		address_id =  $("input[name='address_id']:checked").val();
-		alert(address_id)
-        // fetch("{% url 'api_checkout_session' %}",{
-        //     method: 'POST',
-		// 	body: JSON.stringify(
-        //         { aa: 'test' }
-        //     )
-        // })
-		// .then(function (response) {
-		// 	return response.json();
-		// })
-		// .then(function (session) {
-		// 	return stripe.redirectToCheckout({ sessionId: session.sessionId });
-		// })
-		// .then(function (result) {
-		// 	if (result.error) {
-		// 		alert(result.error.message);
-		// 	}
-		// })
-		// .catch(function (error) {
-		// 	console.error('Error:', error);
-		// });
-	} 
 
-</script> 
 
 	 
 {% endblock %}

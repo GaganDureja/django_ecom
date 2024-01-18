@@ -64,6 +64,7 @@ class Order(models.Model):
     road_area = models.CharField(max_length=255)
     nearby = models.CharField(max_length=255, null=True, blank=True)
     address_type = models.CharField(max_length=5)
+    shipping_charge = models.PositiveIntegerField(default=0)
     total_price = models.PositiveIntegerField(default=1)
     payment_id = models.CharField(max_length=155, null=True, blank=True)
     payment_status = models.BinaryField(default=0, null=True)

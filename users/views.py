@@ -18,6 +18,18 @@ from django.views.decorators.http import require_POST
 from django.core.exceptions import ValidationError
 
 
+
+from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
+import json
+
+import random
+
+
+
+
+
+
 def all_banner(request):
     all_ban = Banner.objects.all()
     return all_ban
@@ -135,6 +147,10 @@ def checkout(request):
     user_cart, created = Cart.objects.get_or_create(user=request.user)
     cart_items = CartItem.objects.filter(cart=user_cart)
     total_price = sum(item.total_price() for item in cart_items)
+    if not total_price:
+        messages.warning(request, "No items in cart")
+        return redirect('view_cart')
+
     return render(request, 'home/checkout.html', {'cart_items': cart_items, 'total_price': total_price})
 
 
@@ -197,29 +213,142 @@ def add_address(request):
 import stripe
 @login_required
 def payment(request):
+    address_id = request.POST.get('address_id')
+    shipping = request.POST.get('shipping')
+    if not address_id:
+        messages.warning(request, "Please select delivery address")
+        return redirect('checkout')
+    elif Address.objects.filter(id=address_id):
+        # proceed payment
+        return render(request,'home/proceed-payment.html', {'address_id':address_id,'shipping':shipping})
+    else:
+        messages.warning(request, "Address not found")
+        return redirect('checkout')
+
+
+
+@csrf_exempt
+def create_checkout_session(request): 
     stripe.api_key = "sk_test_tR3PYbcVNZZ796tH88S4VQ2u"
 
-    token = request.POST.get("stripeToken")
-    amount = 1000  # Amount in cents
+    request_data = json.loads(request.body)
+    address_id = request_data['address_id']
+    shipping = request_data['shipping']
+    if shipping==1:
+        shipping_price = 0
+        shipping_desc = 'Normal Delivery'
+    else:
+        shipping_price = 100
+        shipping_desc = 'Express Delivery'
 
-    try:
-        charge = stripe.Charge.create(
-            amount=amount,
-            currency="usd",
-            source=token,
-            description="Payment for your product or service",
+
+    print(address_id)
+    print(shipping)
+
+    user_cart, created = Cart.objects.get_or_create(user=request.user)
+    cart_items = CartItem.objects.filter(cart=user_cart)
+    total_price = sum(item.total_price() for item in cart_items)
+    
+    if total_price:
+        checkout_session = stripe.checkout.Session.create(        
+            customer_email = request.user.email,
+            payment_method_types = ['card'],
+            line_items = [
+                
+                {
+                    'price_data': {
+                        'currency': 'inr',
+                        'product_data': {
+                            'name': item.product,
+                            'description':item.product.brand
+                        },
+                        'unit_amount': item.product.price*100,
+                    },
+                    'quantity': item.quantity,
+                } for item in cart_items
+            ] + [
+                {
+                    'price_data': {
+                        'currency': 'inr',
+                        'product_data': {
+                            'name': 'Shipping',
+                            'description': shipping_desc,
+                        },
+                        'unit_amount': shipping_price * 100,
+                    },
+                    'quantity': 1,
+                }
+            ],
+            mode = 'payment',
+            success_url = request.build_absolute_uri(reverse(order_details)) + "?session_id={CHECKOUT_SESSION_ID}",
+            cancel_url = request.build_absolute_uri(reverse(order_details)) + "?session_id={CHECKOUT_SESSION_ID}",
         )
 
-        # Process successful payment (update database, send confirmation email, etc.)
-        # ...
+        # get address details 
+        address_det = get_object_or_404(Address,id=address_id)
 
-        return JsonResponse({'success': True, 'message': 'Payment successful'})
+        # save order details
+        create_order = Order.objects.create(
+            order_id = "ecom"+ str(random.randint(111111111, 999999999)),
+            full_name = address_det.full_name,
+            phone = address_det.phone,
+            alt_phone = address_det.alt_phone,
+            pincode = address_det.pincode,
+            state = address_det.state,
+            city = address_det.city,
+            house_building = address_det.house_building,
+            road_area = address_det.road_area,
+            nearby = address_det.nearby,
+            address_type = address_det.address_type,
+            shipping_charge = shipping_price,
+            total_price = total_price,
+            user = request.user
+        )
 
-    except stripe.error.CardError as e:
-        return JsonResponse({'success': False, 'message': f'Card error: {e.error.message}'}, status=400)
+        # add order items
+        for item in cart_items:
+            OrderItem.objects.create(
+                product = item.product,
+                quantity = item.quantity,
+                sub_total = item.quantity * item.product.price,
+                order=create_order
+            )
+        
+        # delete cart
+        Cart.objects.filter(user=request.user).delete()
 
-    except stripe.error.StripeError as e:
-        return JsonResponse({'success': False, 'message': f'Payment failed: {e.error.message}'}, status=500)
+        print(checkout_session)
+        return JsonResponse({'sessionId': checkout_session.id})
+
+
+    else:
+        messages.warning(request, "No items in cart")
+        return redirect('view_cart')
+        
+    
+
+    
+    # OrderDetail.objects.create(
+    #     customer_email=email,
+    #     product=product, ......
+    # )
+
+    # order = Order()
+    # # order.customer.email = request_data['email']
+    # order.product = product
+    # order.customer=customer[0]
+    # order.stripe_payment_intent = checkout_session['payment_intent']
+    # order.price = int(product.price * 100)
+    # order.save()
+
+    # return JsonResponse({'data': checkout_session})
+    
+
+def order_details(request):
+    return render(request,'home/order-details.html')
+
+
+    
 
 def Signup(request): 
     next_url =  request.POST.get('next')
@@ -292,57 +421,8 @@ def user_logout(request):
 
 
 
-def order_details(request):
-    return render(request,'home/order-details.html')
 
 
 
-# from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
-from django.urls import reverse
-import json
 
-@csrf_exempt
-def create_checkout_session(request): 
-    request_data = json.loads(request.body)
-    print(request_data)
-    aa = request_data['aa']
-    print(aa)
-    # stripe.api_key = settings.STRIPE_SECRET_KEY
-    stripe.api_key = "sk_test_tR3PYbcVNZZ796tH88S4VQ2u"
 
-    checkout_session = stripe.checkout.Session.create(        
-        customer_email = request.user.email,
-        payment_method_types = ['card'],
-        line_items = [
-            {
-                'price_data': {
-                    'currency': 'inr',
-                    'product_data': {
-                    'name': 'product_name',
-                    },
-                    'unit_amount': int(400)*100,
-                },
-                'quantity': 1,
-            }
-        ],
-        mode = 'payment',
-        success_url = request.build_absolute_uri(reverse('home')) + "?session_id={CHECKOUT_SESSION_ID}",
-        cancel_url = request.build_absolute_uri(reverse('checkout')),
-    )
-
-    # OrderDetail.objects.create(
-    #     customer_email=email,
-    #     product=product, ......
-    # )
-
-    # order = Order()
-    # # order.customer.email = request_data['email']
-    # order.product = product
-    # order.customer=customer[0]
-    # order.stripe_payment_intent = checkout_session['payment_intent']
-    # order.price = int(product.price * 100)
-    # order.save()
-
-    # return JsonResponse({'data': checkout_session})
-    return JsonResponse({'sessionId': checkout_session.id})
