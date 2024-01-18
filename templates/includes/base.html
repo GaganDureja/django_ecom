@@ -216,12 +216,9 @@
 											<a href="{% url 'users:Signup'%}" class="btn_1">Sign In or Sign Up</a>
 											{% else %}
 											<a href="#" class="btn_1">{{ user.first_name }}</a>
-											<ul>
+											<ul>												
 												<li>
-													<a href="#"><i class="ti-truck"></i>Track your Order</a>
-												</li>
-												<li>
-													<a href="#"><i class="ti-package"></i>My Orders</a>
+													<a href="{% url 'view_my_orders' %}"><i class="ti-package"></i>My Orders</a>
 												</li>
 												<li>
 													<a href="#"><i class="ti-user"></i>My Profile</a>

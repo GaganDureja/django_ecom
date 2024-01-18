@@ -252,7 +252,6 @@ def create_checkout_session(request):
         address_det = get_object_or_404(Address,id=address_id)
         order_id = "ecom"+ str(random.randint(111111111, 999999999))
         if total_price:
-            print("all ok  ------------")
             checkout_session = stripe.checkout.Session.create(        
                 customer_email = request.user.email,           
                 payment_method_types = ['card'],
@@ -304,7 +303,6 @@ def create_checkout_session(request):
                 #     },
                 # },
             )
-            print("all ok  0000")
             # save order details
             create_order = Order.objects.create(
                 order_id = order_id,
@@ -337,14 +335,14 @@ def create_checkout_session(request):
 
             # print(checkout_session)
             return JsonResponse({'sessionId': checkout_session.id})
-
-
         else:
             messages.warning(request, "No items in cart")
             return redirect('view_cart')
         
-    except Exception as e:        
-        return JsonResponse({'error': str(e)}, status=500)
+    except Exception as e:
+        messages.warning(request, "No items in cart")
+        return redirect('view_cart')
+        # return JsonResponse({'error': str(e)}, status=500)
         
 
 
