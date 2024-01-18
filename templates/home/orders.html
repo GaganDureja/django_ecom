@@ -1,0 +1,66 @@
+{% extends "includes/base.html" %}
+{% load static %}
+{% block specific_css %}
+
+<link href="{% static 'css/cart.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+{% block main_content %}
+	<main class="bg_gray">
+		<div class="container margin_30">
+			<div class="page_header">
+				<div class="breadcrumbs">
+					<ul>
+						<li><a href="{% url 'home' %}">Home</a></li>
+						<li>Orders</li>
+					</ul>
+				</div>
+				<h1>My Orders</h1>
+			</div>
+			<!-- /page_header -->
+			<table class="table table-striped cart-list">
+				<thead>
+					<tr>
+						<th> Product </th>
+						<th> Price </th>
+                        <th> Shipping </th>
+						<th> Details </th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for order in my_order %}
+					<tr>
+						<td>							
+							<span class="item_cart">{{order.order_id}}</span>
+						</td>
+						<td>
+							<strong>₹ {{order.total_price}}</strong>
+						</td>
+                        <td>
+							<strong>₹ {{order.shipping_charge}}</strong>
+						</td>		
+						<td class="options">
+							<a href="{% url 'view_order_details' order.order_id %}"><i class="ti-truck"></i></a>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+	
+		</div>
+		<!-- /container -->
+		
+		 
+		
+	</main>
+	<!--/main-->
+{% endblock %}	
+
+
+{% block specific_js %}
+
+
+
+{% endblock %}	
