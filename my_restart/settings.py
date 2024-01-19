@@ -188,3 +188,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # STRIPE_SECRET_KEY="sk_test_tR3PYbcVNZZ796tH88S4VQ2u"
 
 
+
+LOGGING = {
+    'version': 1,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        }
+    }
+}

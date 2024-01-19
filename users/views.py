@@ -366,6 +366,7 @@ def payment_details(request):
             
             Order.objects.filter(order_id=order_id).update(payment_id=payment_intent.client_secret)
             if payment_status == "succeeded":
+                messages.success(request, "Order Successful")
                 Order.objects.filter(order_id=order_id).update(payment_status=1)
 
                 
