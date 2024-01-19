@@ -354,6 +354,7 @@ def payment_details(request):
         stripe.api_key = "sk_test_tR3PYbcVNZZ796tH88S4VQ2u"
 
         try:
+            
             checkout_session = stripe.checkout.Session.retrieve(session_id)
             order_id = checkout_session.metadata.get('order_id')
             payment_intent_id = checkout_session.payment_intent
@@ -382,7 +383,8 @@ def payment_details(request):
 
         except stripe.error.StripeError as e:
             # Stripe errors
-            return render(request, 'home/payment-details.html', {'error': str(e)})
+            messages.info(request, "Error in Order Payment")
+            return render(request, 'home/payment-details.html', {'payment_status': 'Failed','error': str(e)})
 
     else:
         # no session_id
@@ -391,7 +393,7 @@ def payment_details(request):
 
 @login_required
 def orders_list(request):
-    my_order = Order.objects.filter(user=request.user)
+    my_order = Order.objects.filter(user=request.user).order_by('-id')
     return render(request, 'home/orders.html', {'my_order': my_order})
 
 def order_details(request,order):

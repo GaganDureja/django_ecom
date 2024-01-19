@@ -16,9 +16,11 @@
 						 
 					<h2>Order {{payment_status}}!</h2>
 					<p>You will receive a confirmation email soon!</p>
-
-					<a href="{% url 'view_order_details' order_id %}" class="btn btn-primary">Order Details</a>
-
+					{% if payment_status == 'succeeded' %}
+						<a href="{% url 'view_order_details' order_id %}" class="btn btn-primary">Order Details</a>
+					{% else %}
+						<a href="{% url 'view_my_orders' %}" class="btn btn-primary">My Orders</a>
+					{% endif %}
 					</div>
 				</div>
 			</div>
