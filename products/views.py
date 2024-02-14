@@ -57,7 +57,65 @@ def products(request, category_slug=None, sub_category_slug=None):
 
     return render(request, 'products/products.html', {'all_products': products,'category':cat, 'subcategory':subcat})
 
+def products1(request, category_slug=None, sub_category_slug=None):
+    all_products = product.objects.all()
+    
+    cat = None
+    subcat = None
+    
+    if category_slug:
+        cat = get_object_or_404(category, slug=category_slug)
+        all_products = all_products.filter(category=cat)
+        if sub_category_slug:
+            subcat = get_object_or_404(sub_category, slug=sub_category_slug)
+            all_products = all_products.filter(sub_category=subcat)
 
+
+    
+    
+    page = request.GET.get('page', 1)
+    paginator = Paginator(all_products, 6)
+    
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
+
+    return render(request, 'products/products1.html', {'all_products': products,'category':cat, 'subcategory':subcat})
+
+from django.http import JsonResponse
+from django.template.loader import render_to_string
+
+def load_more_products(request):
+    
+    all_products = product.objects.all()
+    
+    cat = None
+    subcat = None
+    category_slug = request.GET.get('cat')
+    sub_category_slug = request.GET.get('subcat')
+    if category_slug:
+        cat = get_object_or_404(category, slug=category_slug)
+        all_products = all_products.filter(category=cat)
+        if sub_category_slug:
+            subcat = get_object_or_404(sub_category, slug=sub_category_slug)
+            all_products = all_products.filter(sub_category=subcat)
+
+
+    page = request.GET.get('page')
+    products = product.objects.all()
+    paginator = Paginator(products, 10)  # Adjust per_page as needed
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = []
+
+    products_html = render_to_string('products/product_list_ajax.html', {'products': products})
+    return JsonResponse({'products_html': products_html})
 
 def product_detail(request, product_slug):
     product_det = get_object_or_404(product, slug=product_slug)

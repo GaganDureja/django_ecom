@@ -1,0 +1,304 @@
+{% extends "includes/base.html" %} 
+{% load static %}
+{% load custom_filters %}
+{% block main_content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js"></script>
+<main>
+    <div class="top_banner">
+        <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.3)">
+            <div class="container">
+                <div class="breadcrumbs">
+                    <ul>
+                        <li><a href="{% url 'home'%}">Home</a></li>
+                        {% if category %}
+                            <li><a href="{% url 'products:product_list_category' category.slug%}">{{ category }}</a></li>
+                        {% endif %}
+
+                        {% if subcategory %}
+                            <li>{{ subcategory }}</li>
+                        {% endif %}
+                        
+                    </ul>
+                </div>
+
+
+                <h1>
+                    {% if category %} {{ category }} {% endif %} 
+                    {% if subcategory %} - {{ subcategory }} {% endif %}
+                </h1>
+            </div>
+        </div>
+        <img src="{{category.imgg.url}}" class="img-fluid" alt="">
+    </div>
+    <!-- /top_banner -->
+        <div id="stick_here"></div>		
+        <div class="toolbox elemento_stick">
+            <div class="container">
+            <ul class="clearfix">
+                <li>
+                    <div class="sort_select">
+                        <select name="sort" id="sort">
+                                <option value="popularity" selected="selected">Sort by popularity</option>
+                                <option value="rating">Sort by average rating</option>
+                                <option value="date">Sort by newness</option>
+                                <option value="price">Sort by price: low to high</option>
+                                <option value="price-desc">Sort by price: high to 
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <a href="#0"><i class="ti-view-grid"></i></a>
+                    <a href="listing-row-1-sidebar-left.html"><i class="ti-view-list"></i></a>
+                </li>{% load custom_filters %}
+                <li>
+                    <a href="#0" class="open_filters">
+                        <i class="ti-filter"></i><span>Filters</span>
+                    </a>
+                </li>
+            </ul>
+            </div>
+        </div>
+        <!-- /toolbox -->
+        
+        <div class="container margin_30">
+        
+        <div class="row">
+            <aside class="col-lg-3" id="sidebar_fixed">
+                <div class="filter_col">
+                    <div class="inner_bt"><a href="#" class="open_filters"><i class="ti-close"></i></a></div>
+                    <div class="filter_type version_2">
+                        <h4><a href="#filter_1" data-bs-toggle="collapse" class="opened">Categories</a></h4>
+                        <div class="collapse show" id="filter_1">
+                            <ul>
+                                <li>
+                                    <label class="container_check">Men <small>12</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="container_check">Women <small>24</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="container_check">Running <small>23</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="container_check">Training <small>11</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /filter_type -->
+                    </div>
+                    <!-- /filter_type -->
+                    <div class="filter_type version_2">
+                        <h4><a href="#filter_2" data-bs-toggle="collapse" class="opened">Color</a></h4>
+                        <div class="collapse show" id="filter_2">
+                            <ul>
+                                <li>
+                                    <label class="container_check">Blue <small>06</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="container_check">Red <small>12</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="container_check">Orange <small>17</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="container_check">Black <small>43</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /filter_type -->
+                    <div class="filter_type version_2">
+                        <h4><a href="#filter_3" data-bs-toggle="collapse" class="closed">Brands</a></h4>
+                        <div class="collapse" id="filter_3">
+                            <ul>
+                                <li>
+                                    <label class="container_check">Adidas <small>11</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="container_check">Nike <small>08</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="container_check">Vans <small>05</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="container_check">Puma <small>18</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /filter_type -->
+                    <div class="filter_type version_2">
+                        <h4><a href="#filter_4" data-bs-toggle="collapse" class="closed">Price</a></h4>
+                        <div class="collapse" id="filter_4">
+                            <ul>
+                                <li>
+                                    <label class="container_check">$0 — $50<small>11</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="container_check">$50 — $100<small>08</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="container_check">$100 — $150<small>05</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="container_check">$150 — $200<small>18</small>
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /filter_type -->
+                    <div class="buttons">
+                        <a href="#0" class="btn_1">Filter</a> <a href="#0" class="btn_1 gray">Reset</a>
+                    </div>
+                </div>
+            </aside>
+            <!-- /col -->
+            <div class="col-lg-9">
+                <div class="row small-gutters" id="product-container">
+
+                    {% for product in all_products %}
+
+                    <div class="col-6 col-md-4">
+                        <div class="grid_item">
+                            <span class="ribbon off">{% percent_discount product.price product.mrp %}</span>
+                            <figure>
+                                <a href="{% url 'products:product_detail' product.slug %}">
+                                    {% for image in product.product_images.all|slice:":1" %}
+                                    <img   class="img-fluid lazy lazyload" data-src="{{ image.img.url }}" alt="loading">
+                                    {% endfor %}
+                                </a>
+                            </figure>
+                            <a href="{% url 'products:product_detail' product.slug %}">
+                                <h3>{{product.name}}</h3>
+                            </a>
+                            <div class="price_box">
+                                <span class="new_price">₹ {{product.price}}</span>
+                                <span class="old_price">₹ {{product.mrp}}</span>
+                            </div>
+                            <ul>
+                                <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
+                                <li><a href="{% url 'add_to_cart' product.id %}" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
+                            </ul>
+                        </div>
+                        <!-- /grid_item -->
+                    </div>
+                    <!-- /col -->
+                    {% endfor %}
+                    
+                </div>
+                <!-- /row -->
+
+                {% comment %}
+                <div class="pagination__wrapper">
+                    <ul class="pagination">
+                        {% if all_products.paginator.num_pages > 1 %}
+                            {% if all_products.has_previous %}
+                            <li><a href="?page={{ all_products.previous_page_number }}" class="prev" title="previous page">&#10094;</a></li>
+                            {% endif %}
+                            <li>
+                                <a href="#" class="active">{{ all_products.number }}</a>
+                            </li>
+                            {% if all_products.has_next %}
+                            <li><a href="?page={{ all_products.next_page_number }}" class="next" title="next page">&#10095;</a></li>
+                            {% endif %}
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endcomment %}
+
+
+            </div>
+            <!-- /col -->
+        </div>
+        <!-- /row -->			
+            
+    </div>
+    <!-- /container -->
+</main>
+<!-- /main -->
+{% endblock %}
+
+
+{% block specific_js %}
+<script src="{% static 'js/sticky_sidebar.min.js' %} "></script>
+<script src="{% static 'js/specific_listing.js' %} "></script>
+
+<script>
+    $(document).ready(function() {
+        var page = 2;
+        var loading = false;
+
+        $(window).scroll(function() {
+            if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+                if (!loading) {
+                    loading = true;
+                    $.ajax({
+                        url: 'load-more-products/',
+                        type: 'GET',
+                        data: {'page': page, 'cat':'{{category.slug}}', 'subcat':'{{subcategory.slug}}'},
+                        success: function(data) {
+                            if (data.products_html) {
+                                $('#product-container').append(data.products_html);
+                                page += 1;
+                                loading = false;
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                            loading = false;
+                        }
+                    });
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
