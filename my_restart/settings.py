@@ -100,15 +100,24 @@ CRONJOBS = [
 # }
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'ecom',
+#         'USER': 'postgres',
+#         'PASSWORD': '123',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
+
+import dj_database_url
+import os
+
+# DATABASE_URL = "postgres://ecom_3ucg_user:NHrsf3iJpofx7JIVVfEHU4Zu7Gz0JdOW@dpg-conolesf7o1s73fogldg-a/ecom_3ucg"
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ecom',
-        'USER': 'postgres',
-        'PASSWORD': '123',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
+	"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
 
 # Password validation
@@ -153,7 +162,6 @@ STATICFILES_DIRS = [
  ]
 
 # Medis files (CSS, JavaScript, Images)
-import os
 
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
