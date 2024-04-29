@@ -114,10 +114,9 @@ CRONJOBS = [
 import dj_database_url
 import os
 
-# DATABASE_URL = "postgres://ecom_3ucg_user:NHrsf3iJpofx7JIVVfEHU4Zu7Gz0JdOW@dpg-conolesf7o1s73fogldg-a/ecom_3ucg"
 
 DATABASES = {
-	"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+	"default": dj_database_url.parse(os.environ.get("postgres://ecom_3ucg_user:NHrsf3iJpofx7JIVVfEHU4Zu7Gz0JdOW@dpg-conolesf7o1s73fogldg-a.oregon-postgres.render.com/ecom_3ucg"))
 }
 
 # Password validation
